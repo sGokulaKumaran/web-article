@@ -1131,3 +1131,428 @@ async function resetRelay() {
     .disabled = false;
 
 }
+
+
+/* =========================================================
+   LOGIC GATES — INTERACTIVE (Slides 10-12)
+   ========================================================= */
+
+const gateState = {
+
+  or: { a: false, b: false },
+
+  and: { a: false, b: false },
+
+  not: { a: false }
+
+};
+
+
+/* Unified toggle function */
+
+function toggleGate(gate, input) {
+
+  gateState[gate][input] =
+    !gateState[gate][input];
+
+  updateGate(gate);
+
+}
+
+
+/* Master update — drives ALL visuals */
+
+function updateGate(gate) {
+
+  const s = gateState[gate];
+
+
+  if (gate === "or") {
+
+    updateRelay("or", "a", s.a);
+    updateRelay("or", "b", s.b);
+
+    const output = s.a || s.b;
+
+    updateBulb("or", output);
+    updateTruthTable(
+      "or", s.a, s.b, output
+    );
+
+    /* Status text */
+
+    const st =
+      document.getElementById("or-status");
+
+    if (!s.a && !s.b) {
+      st.textContent =
+        "Both switches OFF \u2192 Bulb OFF";
+    } else if (s.a && s.b) {
+      st.textContent =
+        "Both switches ON \u2192 Bulb ON";
+    } else {
+      const which = s.a ? "A" : "B";
+      st.textContent =
+        "Switch " + which +
+        " ON \u2192 Bulb ON (either is enough)";
+    }
+
+    /* Buttons */
+
+    updateBtn("or", "a", s.a);
+    updateBtn("or", "b", s.b);
+
+
+  } else if (gate === "and") {
+
+    updateRelay("and", "a", s.a);
+    updateRelay("and", "b", s.b);
+
+    const output = s.a && s.b;
+
+    updateBulb("and", output);
+    updateTruthTable(
+      "and", s.a, s.b, output
+    );
+
+    const st =
+      document.getElementById("and-status");
+
+    if (s.a && s.b) {
+      st.textContent =
+        "Both switches ON \u2192 Bulb ON";
+    } else if (!s.a && !s.b) {
+      st.textContent =
+        "Both switches OFF \u2192 Bulb OFF";
+    } else {
+      const which = s.a ? "A" : "B";
+      const other = s.a ? "B" : "A";
+      st.textContent =
+        "Switch " + which + " ON but " +
+        other + " OFF \u2192 Bulb OFF";
+    }
+
+    updateBtn("and", "a", s.a);
+    updateBtn("and", "b", s.b);
+
+
+  } else if (gate === "not") {
+
+    updateNotRelay(s.a);
+
+    const output = !s.a;
+
+    updateBulb("not", output);
+    updateNotTruthTable(s.a);
+
+    const st =
+      document.getElementById("not-status");
+
+    if (s.a) {
+      st.textContent =
+        "Switch ON \u2192 Bulb OFF (inverted!)";
+    } else {
+      st.textContent =
+        "Switch OFF \u2192 Bulb ON (inverted!)";
+    }
+
+    updateBtn("not", "a", s.a);
+
+  }
+
+}
+
+
+/* Update a standard relay unit */
+
+function updateRelay(gate, id, on) {
+
+  const prefix = gate + "-";
+
+  /* Switch visual */
+
+  const swOpen = document.getElementById(
+    prefix + "sw-" + id + "-open"
+  );
+
+  const swClosed = document.getElementById(
+    prefix + "sw-" + id + "-closed"
+  );
+
+  if (swOpen) {
+    swOpen.setAttribute(
+      "opacity", on ? "0" : "1"
+    );
+  }
+
+  if (swClosed) {
+    swClosed.setAttribute(
+      "opacity", on ? "1" : "0"
+    );
+  }
+
+
+  /* Coil glow */
+
+  const glow = document.getElementById(
+    prefix + "coil-" + id + "-glow"
+  );
+
+  if (glow) {
+
+    glow.style.transition = "opacity 0.3s";
+
+    glow.setAttribute(
+      "opacity", on ? "0.35" : "0"
+    );
+
+  }
+
+
+  /* Arm rotation */
+
+  const arm = document.getElementById(
+    prefix + "arm-" + id
+  );
+
+  if (arm) {
+    arm.style.transform =
+      on ? "rotate(22deg)" : "rotate(0deg)";
+  }
+
+
+  /* Contact bridge */
+
+  const bridge = document.getElementById(
+    prefix + "bridge-" + id
+  );
+
+  if (bridge) {
+
+    bridge.style.transition = "opacity 0.3s";
+
+    bridge.setAttribute(
+      "opacity", on ? "1" : "0"
+    );
+
+  }
+
+}
+
+
+/* Update NOT gate relay (special double-throw) */
+
+function updateNotRelay(on) {
+
+  /* Switch */
+
+  const swOpen = document.getElementById(
+    "not-sw-a-open"
+  );
+
+  const swClosed = document.getElementById(
+    "not-sw-a-closed"
+  );
+
+  swOpen.setAttribute(
+    "opacity", on ? "0" : "1"
+  );
+
+  swClosed.setAttribute(
+    "opacity", on ? "1" : "0"
+  );
+
+
+  /* Coil glow */
+
+  const glow = document.getElementById(
+    "not-coil-glow"
+  );
+
+  glow.style.transition = "opacity 0.3s";
+
+  glow.setAttribute(
+    "opacity", on ? "0.35" : "0"
+  );
+
+
+  /* Arm — moves from upper to lower contact */
+
+  const arm = document.getElementById(
+    "not-arm"
+  );
+
+  if (on) {
+
+    /* Rotate so arm moves from upper (130) to lower (210) contact */
+
+    arm.style.transform = "rotate(37deg)";
+
+  } else {
+
+    arm.style.transform = "rotate(0deg)";
+
+  }
+
+
+  /* Contact bridges */
+
+  const upper = document.getElementById(
+    "not-bridge-upper"
+  );
+
+  const lower = document.getElementById(
+    "not-bridge-lower"
+  );
+
+  upper.style.transition = "opacity 0.3s";
+  lower.style.transition = "opacity 0.3s";
+
+  upper.setAttribute(
+    "opacity", on ? "0" : "1"
+  );
+
+  lower.setAttribute(
+    "opacity", on ? "1" : "0"
+  );
+
+}
+
+
+/* Update bulb visuals */
+
+function updateBulb(gate, on) {
+
+  const prefix = gate + "-bulb-";
+
+  const glass = document.getElementById(
+    prefix + "glass"
+  );
+
+  const filament = document.getElementById(
+    prefix + "filament"
+  );
+
+  const halo = document.getElementById(
+    prefix + "halo"
+  );
+
+  const rays = document.getElementById(
+    gate + "-light-rays"
+  );
+
+  if (glass) {
+    glass.setAttribute(
+      "fill", on ? "#fff8e0" : "#fafafa"
+    );
+  }
+
+  if (filament) {
+
+    filament.setAttribute(
+      "stroke", on ? "#e8a020" : "#666"
+    );
+
+    filament.setAttribute(
+      "stroke-width", on ? "2" : "1.5"
+    );
+
+  }
+
+  if (halo) {
+
+    halo.style.transition = "opacity 0.5s";
+
+    halo.setAttribute(
+      "opacity", on ? "0.7" : "0"
+    );
+
+  }
+
+  if (rays) {
+
+    rays.style.transition = "opacity 0.5s";
+
+    rays.setAttribute(
+      "opacity", on ? "1" : "0"
+    );
+
+  }
+
+}
+
+
+/* Update toggle button */
+
+function updateBtn(gate, id, on) {
+
+  const btn = document.getElementById(
+    "btn-" + gate + "-" + id
+  );
+
+  if (!btn) return;
+
+  btn.textContent =
+    id.toUpperCase() + " = " +
+    (on ? "ON" : "OFF");
+
+  if (on) {
+    btn.classList.add("on");
+  } else {
+    btn.classList.remove("on");
+  }
+
+}
+
+
+/* Update truth table highlighting for OR/AND */
+
+function updateTruthTable(gate, a, b) {
+
+  const rowKey =
+    (a ? "1" : "0") + (b ? "1" : "0");
+
+  const rows = ["00", "01", "10", "11"];
+
+  rows.forEach(function (key) {
+
+    const row = document.getElementById(
+      gate + "-row-" + key
+    );
+
+    if (row) {
+
+      if (key === rowKey) {
+        row.classList.add("active-row");
+      } else {
+        row.classList.remove("active-row");
+      }
+
+    }
+
+  });
+
+}
+
+
+/* Update truth table for NOT */
+
+function updateNotTruthTable(a) {
+
+  const row0 = document.getElementById(
+    "not-row-0"
+  );
+
+  const row1 = document.getElementById(
+    "not-row-1"
+  );
+
+  if (a) {
+    row0.classList.remove("active-row");
+    row1.classList.add("active-row");
+  } else {
+    row0.classList.add("active-row");
+    row1.classList.remove("active-row");
+  }
+
+}

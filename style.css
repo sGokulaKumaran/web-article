@@ -1765,6 +1765,445 @@ body.dark .electron-dot {
 
 
 /* =========================================================
+   SLIDE 9 — GATES INTRODUCTION
+   ========================================================= */
+
+.gates-intro-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+.gates-intro-layout {
+
+  display: grid;
+
+  grid-template-columns: 50% 50%;
+
+  gap: 50px;
+
+  align-items: center;
+
+}
+
+.gates-intro-title {
+
+  font-size: 56px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.03em;
+
+  margin-bottom: 20px;
+
+}
+
+.gates-intro-title span {
+
+  color: var(--accent);
+
+}
+
+.gates-intro-text {
+
+  font-size: 23px;
+
+  line-height: 1.55;
+
+  color: var(--secondary-text);
+
+  margin-bottom: 24px;
+
+}
+
+.gates-intro-text strong {
+
+  color: var(--main-text);
+
+}
+
+.gate-types {
+
+  list-style: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+}
+
+.gate-type-item {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 16px 22px;
+
+  background: var(--soft-background);
+
+  border: 1px solid var(--border);
+
+  border-left: 4px solid var(--accent);
+
+}
+
+.gate-type-icon {
+
+  font-size: 28px;
+
+  min-width: 36px;
+
+  text-align: center;
+
+}
+
+.gate-type-item p {
+
+  font-size: 19px;
+
+  line-height: 1.45;
+
+  color: var(--secondary-text);
+
+}
+
+.gate-type-item strong {
+
+  color: var(--main-text);
+
+}
+
+.gates-visual {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 20px;
+
+}
+
+.gates-chain {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+}
+
+.chain-box {
+
+  padding: 18px 28px;
+
+  background: var(--soft-background);
+
+  border: 2px solid var(--border);
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  text-align: center;
+
+}
+
+.chain-box.accent {
+
+  border-color: var(--accent);
+
+  color: var(--accent);
+
+  background: var(--accent-soft);
+
+}
+
+.chain-arrow {
+
+  font-size: 28px;
+
+  color: var(--accent);
+
+}
+
+/* =========================================================
+   SLIDES 10-12 — GATE INTERACTIVE COMMON
+   ========================================================= */
+
+.gate-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+.gate-layout {
+
+  display: grid;
+
+  grid-template-columns: 62% 38%;
+
+  gap: 30px;
+
+  align-items: start;
+
+  height: 100%;
+
+}
+
+.gate-diagram-col {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 14px;
+
+}
+
+.gate-header {
+
+  width: 100%;
+
+  margin-bottom: 8px;
+
+}
+
+.gate-title {
+
+  font-size: 48px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  margin-bottom: 6px;
+
+}
+
+.gate-title span {
+
+  color: var(--accent);
+
+}
+
+.gate-subtitle {
+
+  font-size: 20px;
+
+  color: var(--secondary-text);
+
+}
+
+.gate-controls {
+
+  display: flex;
+
+  gap: 14px;
+
+  margin-top: 8px;
+
+}
+
+.gate-toggle-btn {
+
+  padding: 12px 36px;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  font-family: inherit;
+
+  border: 2px solid var(--border);
+
+  border-radius: 6px;
+
+  background: var(--soft-background);
+
+  color: var(--secondary-text);
+
+  cursor: pointer;
+
+  transition: all 0.25s;
+
+  letter-spacing: 0.04em;
+
+  min-width: 160px;
+
+}
+
+.gate-toggle-btn.on {
+
+  border-color: #27ae60;
+
+  background: #27ae60;
+
+  color: white;
+
+}
+
+.gate-status {
+
+  margin-top: 10px;
+
+  padding: 10px 28px;
+
+  background: var(--soft-background);
+
+  border-left: 5px solid var(--accent);
+
+  font-size: 19px;
+
+  font-weight: 600;
+
+  color: var(--accent);
+
+}
+
+/* Truth table panel */
+
+.gate-info-col {
+
+  padding-top: 50px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+
+}
+
+.truth-table-box {
+
+  border: 1px solid var(--border);
+
+  background: var(--soft-background);
+
+  padding: 22px;
+
+}
+
+.truth-table-title {
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  color: var(--accent);
+
+  margin-bottom: 14px;
+
+}
+
+.truth-table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 18px;
+
+}
+
+.truth-table th {
+
+  padding: 10px 16px;
+
+  text-align: center;
+
+  font-weight: 700;
+
+  color: var(--accent);
+
+  border-bottom: 2px solid var(--border);
+
+  font-size: 16px;
+
+  letter-spacing: 0.05em;
+
+}
+
+.truth-table td {
+
+  padding: 10px 16px;
+
+  text-align: center;
+
+  border-bottom: 1px solid var(--border);
+
+  color: var(--secondary-text);
+
+  transition: all 0.3s;
+
+}
+
+.truth-table tr.active-row td {
+
+  background: var(--accent-soft);
+
+  color: var(--main-text);
+
+  font-weight: 700;
+
+}
+
+.gate-explain-box {
+
+  padding: 20px 22px;
+
+  border-left: 4px solid var(--secondary-accent);
+
+  background: var(--soft-background);
+
+}
+
+.gate-explain-box h4 {
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  color: var(--main-text);
+
+  margin-bottom: 8px;
+
+}
+
+.gate-explain-box p {
+
+  font-size: 17px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+}
+
+.gate-explain-box strong {
+
+  color: var(--main-text);
+
+}
+
+
+/* =========================================================
    INVISIBLE CONTROLS
    ========================================================= */
 
