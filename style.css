@@ -1,0 +1,634 @@
+/* Presentation Theme & Layout */
+:root {
+  --slide-w: 1920px;
+  --slide-h: 1080px;
+  --bg-stage: #090c10;
+  --bg-deck: #0d121c;
+  --accent-gold: #f59e0b;
+  --accent-cyan: #38bdf8;
+  --accent-blue: #6366f1;
+  --text-main: #f8fafc;
+  --text-sub: #94a3b8;
+  --text-dim: #64748b;
+  --card-bg: rgba(255, 255, 255, 0.035);
+  --card-border: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-stage);
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  color: var(--text-main);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#stage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, #151d2c 0%, #080b10 100%);
+  overflow: hidden;
+}
+
+#deck {
+  position: relative;
+  width: var(--slide-w);
+  height: var(--slide-h);
+
+/* Slide Container */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(0.98);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Background elements for PPT slide */
+.slide-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  pointer-events: none;
+}
+
+.slide-glow-1 {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  top: -200px;
+  right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.slide-glow-2 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  bottom: -200px;
+  left: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.16) 0%, transparent 70%);
+  filter: blur(100px);
+  pointer-events: none;
+}
+
+.slide-content-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 60px 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 2;
+
+/* Slide Header */
+.slide-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 20px;
+}
+
+.pill-seminar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  padding: 8px 20px;
+  border-radius: 9999px;
+  color: #fbbf24;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pill-seminar .live-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+.dept-header-tag {
+  color: var(--text-dim);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* Slide 1 Main Content Area: 2 Columns */
+.title-slide-body {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 80px;
+  align-items: center;
+  margin: auto 0;
+}
+
+/* 3D Book Stand */
+.book-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.book-card-3d {
+  position: relative;
+  transform: rotateY(-12deg) rotateX(4deg);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.book-card-3d:hover {
+  transform: rotateY(-2deg) rotateX(0deg) scale(1.02);
+}
+
+.book-cover-img {
+  width: 380px;
+  height: auto;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 
+    -20px 30px 50px -10px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(56, 189, 248, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.book-reflection {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 380px;
+  height: 90px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent 70%);
+  transform: scaleY(-1);
+  opacity: 0.25;
+  filter: blur(2px);
+
+/* Text & Presenter Info Column */
+.presentation-info-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.kicker {
+  color: var(--accent-cyan);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kicker::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 2px;
+  background: var(--accent-cyan);
+}
+
+.main-title {
+  font-size: 58px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+.title-highlight {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.author-line {
+  font-size: 22px;
+  color: var(--text-sub);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.author-line .author-highlight {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+/* Presenter Info Card (PPT Slide Badge) */
+.presenter-banner {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid var(--card-border);
+  border-left: 5px solid var(--accent-gold);
+  border-radius: 12px;
+  padding: 24px 32px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  max-width: 740px;
+}
+
+.presenter-role {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.presenter-fullname {
+  font-size: 36px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+
+.presenter-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 32px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.detail-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-lbl {
+  font-size: 12px;
+  text-transform: uppercase;
+
+/* Slide Footer */
+.slide-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
+  color: var(--text-dim);
+  font-size: 15px;
+}
+
+.slide-counter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Consolas', monospace;
+  font-size: 16px;
+  color: var(--text-sub);
+}
+
+.slide-counter-tag strong {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+/* Empty Slides (2 & 3) Designed as PPT Templates */
+.empty-slide-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  max-width: 860px;
+}
+
+.empty-symbol {
+  width: 90px;
+  height: 90px;
+  border-radius: 24px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  font-size: 38px;
+  margin-bottom: 28px;
+}
+
+.empty-headline {
+  font-size: 52px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.empty-subtext {
+  font-size: 22px;
+  color: var(--text-sub);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.empty-badge-grid {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.empty-chip {
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* PPT Floating Presenter Controls */
+#ppt-controls {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.65);
+  z-index: 1000;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#ppt-controls.dimmed {
+  opacity: 0.2;
+}
+
+#ppt-controls:hover,
+#ppt-controls:focus-within {
+  opacity: 1;
+}
+
+.ppt-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 16px;
+}
+
+.ppt-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: scale(1.06);
+}
+
+.ppt-btn:active {
+  transform: scale(0.94);
+}
+
+.ppt-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ppt-v-sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 4px;
+}
+
+.ppt-counter {
+  font-family: 'Consolas', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1f5f9;
+  padding: 0 10px;
+  letter-spacing: 0.05em;
+}
+
+/* Keyboard Guide HUD */
+.keyboard-guide {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(12px);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.kbd-tag {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'Consolas', monospace;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+/* Slide Drawer Sidebar for Overview / Jump */
+#drawer-btn {
+  position: fixed;
+  top: 20px;
+  left: 24px;
+  z-index: 1001;
+}
+
+#slide-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background: rgba(10, 14, 23, 0.96);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 80px 20px 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+#slide-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  font-weight: 700;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.drawer-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.drawer-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.drawer-item.active {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: #38bdf8;
+}
+
+.drawer-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  font-weight: 700;
+  font-family: 'Consolas', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+}
+
+.drawer-item.active .drawer-num {
+  background: #38bdf8;
+  color: #090c10;
+}
+
+.drawer-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+/* Blank Screen Mode (Press 'B' or 'W' like PPT) */
+#blank-screen {
+  position: fixed;
+  inset: 0;
+  background: #000000;
+  z-index: 2000;
+  display: none;
+  cursor: pointer;
+}
+
+#blank-screen.white {
+  background: #ffffff;
+}
+
+#blank-screen.active {
+  display: block;
+}
+
+
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.detail-val {
+  font-size: 18px;
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.detail-val.mono {
+  font-family: 'Consolas', monospace;
+  color: #38bdf8;
+  letter-spacing: 0.05em;
+}
+
+  mask-image: linear-gradient(to bottom, black, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent);
+  pointer-events: none;
+}
+
+}
+
+  transform-origin: center center;
+  background-color: var(--bg-deck);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  overflow: hidden;
+}
