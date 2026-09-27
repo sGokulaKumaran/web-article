@@ -12,9 +12,9 @@ let currentSlide = 0;
 /* =========================================================
    FIT DECK TO THE SCREEN
    The deck is a fixed 1920 x 1080 stage. Without scaling,
-   any browser window shorter than 1080 px cuts off the
-   bottom of every slide. Scaling the whole stage keeps all
-   content visible on any screen, exactly like PowerPoint.
+   any window shorter than 1080 px cuts off the bottom of
+   every slide. Scaling the whole stage keeps all content
+   visible on any screen, exactly like PowerPoint.
    ========================================================= */
 
 const DECK_WIDTH = 1920;
@@ -25,6 +25,28 @@ const deckElement =
   document.getElementById("deck");
 
 
+/* Reads the real visible area, so fullscreen and
+   maximised windows are measured correctly. */
+
+function getViewportSize() {
+
+  return {
+
+    width:
+      window.visualViewport?.width ??
+      document.documentElement.clientWidth ??
+      window.innerWidth,
+
+    height:
+      window.visualViewport?.height ??
+      document.documentElement.clientHeight ??
+      window.innerHeight
+
+  };
+
+}
+
+
 function fitDeckToScreen() {
 
   if (!deckElement) {
@@ -33,9 +55,17 @@ function fitDeckToScreen() {
 
   }
 
+  const viewport = getViewportSize();
+
+  /* The stage always scales to fill the screen, growing
+     as well as shrinking, so it covers the whole display
+     in fullscreen on any monitor. The 16:9 ratio is kept
+     and any leftover space is letterboxed by the black
+     background. */
+
   const scale = Math.min(
-    window.innerWidth / DECK_WIDTH,
-    window.innerHeight / DECK_HEIGHT
+    viewport.width / DECK_WIDTH,
+    viewport.height / DECK_HEIGHT
   );
 
   deckElement.style.transform =
@@ -44,10 +74,73 @@ function fitDeckToScreen() {
 }
 
 
+/* The viewport can change size several times while
+   entering or leaving fullscreen, and the final size is
+   only known after the browser settles. Re-fitting on the
+   next two frames guarantees the last, correct value wins. */
+
+let fitFrameCount = 0;
+
+function scheduleFit() {
+
+  fitFrameCount = 2;
+
+  if (fitFrameCount > 0) {
+
+    requestAnimationFrame(function runFit() {
+
+      fitDeckToScreen();
+
+      fitFrameCount--;
+
+      if (fitFrameCount > 0) {
+
+        requestAnimationFrame(runFit);
+
+      }
+
+    });
+
+  }
+
+}
+
+
 window.addEventListener(
   "resize",
-  fitDeckToScreen
+  scheduleFit
 );
+
+window.addEventListener(
+  "orientationchange",
+  scheduleFit
+);
+
+window.visualViewport?.addEventListener(
+  "resize",
+  scheduleFit
+);
+
+document.addEventListener(
+  "fullscreenchange",
+  scheduleFit
+);
+
+document.addEventListener(
+  "webkitfullscreenchange",
+  scheduleFit
+);
+
+/* Safety net for browsers that resize the page
+   without firing a window resize event. */
+
+if (window.ResizeObserver) {
+
+  new ResizeObserver(scheduleFit).observe(
+    document.documentElement
+  );
+
+}
 
 fitDeckToScreen();
 
@@ -325,41 +418,41 @@ showSlide(0);
    but interactive controls keep their own click behaviour.
    ========================================================= */
 
-// const deck = document.getElementById("deck");
+const deck = document.getElementById("deck");
 
-// deck.addEventListener(
-//   "click",
-//   function (event) {
+deck.addEventListener(
+  "click",
+  function (event) {
 
-//     /* Let real controls handle their own clicks */
+    /* Let real controls handle their own clicks */
 
-//     if (
-//       event.target.closest("button") ||
-//       event.target.closest("a")
-//     ) {
+    if (
+      event.target.closest("button") ||
+      event.target.closest("a")
+    ) {
 
-//       return;
+      return;
 
-//     }
+    }
 
-//     nextSlide();
+    nextSlide();
 
-//   }
-// );
+  }
+);
 
 
-// /* Right click / left third goes back, like a presenter remote */
+/* Right click / left third goes back, like a presenter remote */
 
-// deck.addEventListener(
-//   "contextmenu",
-//   function (event) {
+deck.addEventListener(
+  "contextmenu",
+  function (event) {
 
-//     event.preventDefault();  
+    event.preventDefault();  
 
-//     previousSlide();
+    previousSlide();
 
-//   }
-// );
+  }
+);
 
 
 /* =========================================================
