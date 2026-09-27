@@ -4,12 +4,10 @@
 
 
 /* =========================================================
-   THEME VARIABLES
+   THEME
    ========================================================= */
 
 :root {
-
-  /* Light theme */
 
   --slide-background: #ffffff;
 
@@ -33,10 +31,6 @@
 
 }
 
-
-/* =========================================================
-   DARK THEME
-   ========================================================= */
 
 body.dark {
 
@@ -68,11 +62,13 @@ body.dark {
    ========================================================= */
 
 * {
+
   box-sizing: border-box;
 
   margin: 0;
 
   padding: 0;
+
 }
 
 
@@ -98,7 +94,7 @@ body {
 
 
 /* =========================================================
-   PRESENTATION BACKGROUND
+   PRESENTATION
    ========================================================= */
 
 #presentation {
@@ -117,10 +113,6 @@ body {
 
 }
 
-
-/* =========================================================
-   16:9 POWERPOINT CANVAS
-   ========================================================= */
 
 #deck {
 
@@ -168,8 +160,6 @@ body {
 }
 
 
-/* Active slide */
-
 .slide.active {
 
   visibility: visible;
@@ -182,7 +172,7 @@ body {
 
 
 /* =========================================================
-   SLIDE INNER
+   COMMON SLIDE INNER
    ========================================================= */
 
 .slide-inner {
@@ -199,21 +189,12 @@ body {
 
 
 /* =========================================================
-   TITLE SLIDE
+   SLIDE 1
    ========================================================= */
 
-.slide:first-child {
+.title-slide {
 
   border-top: 8px solid var(--accent);
-
-}
-
-
-/* =========================================================
-   TITLE SLIDE LAYOUT
-   ========================================================= */
-
-.slide:first-child .slide-inner {
 
   display: grid;
 
@@ -223,10 +204,6 @@ body {
 
 }
 
-
-/* =========================================================
-   BOOK SECTION
-   ========================================================= */
 
 .book-section {
 
@@ -238,12 +215,8 @@ body {
 
   align-items: center;
 
-  position: relative;
-
 }
 
-
-/* Book image */
 
 .book-cover {
 
@@ -263,10 +236,6 @@ body {
 }
 
 
-/* =========================================================
-   TITLE SECTION
-   ========================================================= */
-
 .title-section {
 
   padding-left: 55px;
@@ -275,8 +244,6 @@ body {
 
 }
 
-
-/* Small CODE text */
 
 .book-name {
 
@@ -293,8 +260,6 @@ body {
 }
 
 
-/* Main title */
-
 .title-section h1 {
 
   font-size: 62px;
@@ -305,12 +270,8 @@ body {
 
   letter-spacing: -0.025em;
 
-  color: var(--main-text);
-
 }
 
-
-/* Highlight */
 
 .title-section h1 span {
 
@@ -318,8 +279,6 @@ body {
 
 }
 
-
-/* Author */
 
 .author {
 
@@ -331,10 +290,6 @@ body {
 
 }
 
-
-/* =========================================================
-   PRESENTER
-   ========================================================= */
 
 .presenter-info {
 
@@ -364,12 +319,8 @@ body {
 
   font-weight: 600;
 
-  color: var(--main-text);
-
 }
 
-
-/* Student information */
 
 .student-info {
 
@@ -387,7 +338,7 @@ body {
 
 
 /* =========================================================
-   ABOUT THE AUTHOR SLIDE (SLIDE 2)
+   SLIDE 2 — AUTHOR
    ========================================================= */
 
 .author-slide {
@@ -396,268 +347,13 @@ body {
 
 }
 
-.author-slide .slide-inner {
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: flex-start;
-
-}
-
-/* Slide Header & Title */
 
 .author-slide-header {
 
-  margin-bottom: 55px;
+  margin-bottom: 42px;
 
 }
 
-.author-slide .slide-title {
-
-  font-size: 52px;
-
-  font-weight: 700;
-
-  line-height: 1.1;
-
-  letter-spacing: -0.02em;
-
-  color: var(--main-text);
-
-  display: inline-block;
-
-  position: relative;
-
-}
-
-.author-slide .slide-title::after {
-
-  content: "";
-
-  display: block;
-
-  width: 56px;
-
-  height: 4px;
-
-  background: var(--accent);
-
-  margin-top: 14px;
-
-  border-radius: 2px;
-
-}
-
-/* Two-column author layout */
-
-.author-layout {
-
-  display: grid;
-
-  grid-template-columns: 360px 1fr;
-
-  column-gap: 90px;
-
-  align-items: start;
-
-  max-width: 1560px;
-
-}
-
-/* Author Photo Column */
-
-.author-photo-column {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-start;
-
-}
-
-.author-photo-frame {
-
-  width: 360px;
-
-  height: 360px;
-
-  border-radius: 4px;
-
-  overflow: hidden;
-
-  border: 1px solid var(--border);
-
-  background: var(--soft-background);
-
-  box-shadow: 14px 16px 30px rgba(0, 0, 0, 0.16);
-
-}
-
-body.dark .author-photo-frame {
-
-  box-shadow: 14px 16px 30px rgba(0, 0, 0, 0.45);
-
-}
-
-.author-photo {
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: cover;
-
-  display: block;
-
-}
-
-/* Author Info Column */
-
-.author-info-column {
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: flex-start;
-
-  padding-top: 4px;
-
-}
-
-.author-name {
-
-  font-size: 42px;
-
-  font-weight: 700;
-
-  line-height: 1.15;
-
-  letter-spacing: -0.015em;
-
-  color: var(--main-text);
-
-  margin-bottom: 22px;
-
-}
-
-.author-bio {
-
-  font-size: 25px;
-
-  line-height: 1.6;
-
-  color: var(--secondary-text);
-
-  max-width: 980px;
-
-  margin-bottom: 45px;
-
-}
-
-/* Known For Section */
-
-.author-known-for {
-
-  border-left: 4px solid var(--accent);
-
-  padding-left: 24px;
-
-}
-
-.known-for-title {
-
-  font-size: 22px;
-
-  font-weight: 700;
-
-  letter-spacing: 0.04em;
-
-  color: var(--main-text);
-
-  margin-bottom: 18px;
-
-}
-
-.known-for-list {
-
-  list-style: none;
-
-  padding: 0;
-
-  margin: 0;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 16px;
-
-}
-
-.known-for-list li {
-
-  position: relative;
-
-  padding-left: 28px;
-
-  font-size: 22px;
-
-  line-height: 1.5;
-
-  color: var(--secondary-text);
-
-}
-
-.known-for-list li::before {
-
-  content: "•";
-
-  position: absolute;
-
-  left: 4px;
-
-  top: -2px;
-
-  font-size: 26px;
-
-  line-height: 1;
-
-  color: var(--accent);
-
-}
-
-
-/* =========================================================
-   NORMAL SLIDES
-   ========================================================= */
-
-.simple-slide {
-
-  display: flex;
-
-  align-items: center;
-
-}
-
-
-/* Content width */
-
-.content {
-
-  width: 75%;
-
-  margin-left: 80px;
-
-}
-
-
-/* =========================================================
-   SLIDE LABEL
-   ========================================================= */
 
 .slide-label {
 
@@ -669,588 +365,38 @@ body.dark .author-photo-frame {
 
   letter-spacing: 0.15em;
 
-  margin-bottom: 20px;
-
-}
-
-
-/* =========================================================
-   SLIDE TITLE
-   ========================================================= */
-
-.simple-slide h2 {
-
-  font-size: 70px;
-
-  line-height: 1.1;
-
-  font-weight: 700;
-
-  color: var(--main-text);
-
-  margin-bottom: 30px;
-
-}
-
-
-.simple-slide h2 span {
-
-  color: var(--accent);
-
-}
-
-
-/* =========================================================
-   DESCRIPTION
-   ========================================================= */
-
-.slide-description {
-
-  max-width: 1050px;
-
-  font-size: 27px;
-
-  line-height: 1.55;
-
-  color: var(--secondary-text);
-
-  margin-bottom: 55px;
-
-}
-
-
-/* =========================================================
-   POINTS
-   ========================================================= */
-
-.points {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 16px;
-
-  width: 750px;
-
-}
-
-
-.point {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 22px;
-
-  min-height: 68px;
-
-  padding: 12px 20px;
-
-  background: var(--point-background);
-
-  border: 1px solid var(--border);
-
-}
-
-
-.point span {
-
-  width: 38px;
-
-  color: var(--accent);
-
-  font-size: 16px;
-
-  font-weight: 700;
-
-}
-
-
-.point p {
-
-  color: var(--main-text);
-
-  font-size: 21px;
-
-  font-weight: 500;
-
-}
-
-
-/* =========================================================
-   INVISIBLE CONTROLS
-   ========================================================= */
-
-.invisible-control {
-
-  position: fixed;
-
-  width: 1px;
-
-  height: 1px;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-}
-
-
-/* =========================================================
-   BLACK SCREEN
-   ========================================================= */
-
-#black-screen {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 9999;
-
-  display: none;
-
-  background: #000;
-
-}
-
-
-#black-screen.active {
-
-  display: block;
-
-}
-
-
-/* =========================================================
-   FULLSCREEN MODE
-   ========================================================= */
-
-:fullscreen #presentation {
-
-  width: 100vw;
-
-  height: 100vh;
-
-}
-
-
-:fullscreen #deck {
-
-  width: 100vw;
-
-  height: 100vh;
-
-}
-
-
-/*
-  The original 1920x1080 design scales
-  proportionally inside the browser.
-*/
-
-
-/* =========================================================
-   SMALL SCREEN FALLBACK
-   ========================================================= */
-
-@media (max-width: 1200px) {
-
-  .slide-inner {
-
-    padding: 60px;
-
-  }
-
-  .title-section {
-
-    padding-left: 30px;
-
-  }
-
-  .title-section h1 {
-
-    font-size: 48px;
-
-  }
-
-  .book-cover {
-
-    width: 300px;
-
-  }
-
-  .simple-slide h2 {
-
-    font-size: 52px;
-
-  }
-
-  .slide-description {
-
-    font-size: 22px;
-
-  }
-
-  .author-slide .slide-title {
-
-    font-size: 40px;
-
-  }
-
-  .author-slide-header {
-
-    margin-bottom: 35px;
-
-  }
-
-  .author-layout {
-
-    grid-template-columns: 260px 1fr;
-
-    column-gap: 45px;
-
-  }
-
-  .author-photo-frame {
-
-    width: 260px;
-
-    height: 260px;
-
-  }
-
-  .author-name {
-
-    font-size: 32px;
-
-    margin-bottom: 15px;
-
-  }
-
-  .author-bio {
-
-    font-size: 20px;
-
-    margin-bottom: 30px;
-
-  }
-
-  .known-for-title {
-
-    font-size: 19px;
-
-    margin-bottom: 14px;
-
-  }
-
-  .known-for-list {
-
-    gap: 12px;
-
-  }
-
-  .known-for-list li {
-
-    font-size: 18px;
-
-    padding-left: 22px;
-
-  }
-
-}
-
-
-/* =========================================================
-   KEYBOARD HELP BUTTON
-   ========================================================= */
-
-#help-button {
-
-  position: fixed;
-
-  top: 22px;
-  right: 22px;
-
-  width: 34px;
-  height: 34px;
-
-  border: 1px solid rgba(128, 128, 128, 0.35);
-
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.9);
-
-  color: #555;
-
-  font-size: 18px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  z-index: 5000;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-
-#help-button:hover {
-
-  background: #ffffff;
-
-  transform: scale(1.05);
-
-}
-
-
-/* Dark theme */
-
-body.dark #help-button {
-
-  background: #242424;
-
-  color: #ddd;
-
-  border-color: #444;
-
-}
-
-
-/* =========================================================
-   KEYBOARD HELP PANEL
-   ========================================================= */
-
-#keyboard-help {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 4999;
-
-  display: none;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background: rgba(0, 0, 0, 0.35);
-
-}
-
-
-#keyboard-help.active {
-
-  display: flex;
-
-}
-
-
-/* =========================================================
-   HELP BOX
-   ========================================================= */
-
-.help-box {
-
-  width: 480px;
-
-  background: #ffffff;
-
-  border: 1px solid #ddd;
-
-  border-radius: 8px;
-
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.25);
-
-  padding: 25px;
-
-}
-
-
-body.dark .help-box {
-
-  background: #202020;
-
-  border-color: #3a3a3a;
-
-  color: #ffffff;
-
-}
-
-
-/* =========================================================
-   HEADER
-   ========================================================= */
-
-.help-header {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  padding-bottom: 18px;
-
-  border-bottom: 1px solid #e5e5e5;
-
   margin-bottom: 12px;
 
-}
-
-
-body.dark .help-header {
-
-  border-color: #3a3a3a;
-
-}
-
-
-.help-header h3 {
-
-  font-size: 20px;
-
-  font-weight: 600;
-
-}
-
-
-#close-help {
-
-  border: none;
-
-  background: transparent;
-
-  color: #777;
-
-  font-size: 27px;
-
-  line-height: 1;
-
-  cursor: pointer;
-
-}
-
-
-body.dark #close-help {
-
-  color: #aaa;
-
-}
-
-
-/* =========================================================
-   SHORTCUT LIST
-   ========================================================= */
-
-.shortcut {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 20px;
-
-  padding: 10px 0;
-
-}
-
-
-.shortcut span {
-
-  color: #555;
-
-  font-size: 15px;
-
-}
-
-
-body.dark .shortcut span {
-
-  color: #bbb;
-
-}
-
-
-.shortcut > div {
-
-  display: flex;
-
-  gap: 5px;
-
-}
-
-
-/* =========================================================
-   ABOUT THE AUTHOR SLIDE
-   ========================================================= */
-
-.author-slide {
-  border-top: 8px solid var(--accent);
-}
-
-
-.author-slide .slide-inner {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-
-/* =========================================================
-   AUTHOR SLIDE HEADER
-   ========================================================= */
-
-.author-slide-header {
-  margin-bottom: 42px;
-}
-
-
-.author-slide .slide-label {
-  margin-bottom: 12px;
 }
 
 
 .author-slide .slide-title {
-  font-size: 52px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--main-text);
 
-  display: inline-block;
-  position: relative;
+  font-size: 52px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
 }
 
 
 .author-slide .slide-title::after {
+
   content: "";
 
   display: block;
 
   width: 56px;
+
   height: 4px;
 
   background: var(--accent);
 
   margin-top: 14px;
 
-  border-radius: 2px;
 }
 
-
-
-/* =========================================================
-   AUTHOR LAYOUT
-   ========================================================= */
 
 .author-layout {
 
@@ -1263,21 +409,6 @@ body.dark .shortcut span {
   align-items: start;
 
   max-width: 1580px;
-}
-
-
-
-/* =========================================================
-   AUTHOR PHOTO
-   ========================================================= */
-
-.author-photo-column {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: flex-start;
 
 }
 
@@ -1285,9 +416,8 @@ body.dark .shortcut span {
 .author-photo-frame {
 
   width: 360px;
-  height: 360px;
 
-  border-radius: 6px;
+  height: 360px;
 
   overflow: hidden;
 
@@ -1301,38 +431,18 @@ body.dark .shortcut span {
 }
 
 
-body.dark .author-photo-frame {
-
-  box-shadow:
-    14px 16px 30px rgba(0, 0, 0, 0.45);
-
-}
-
-
 .author-photo {
 
   width: 100%;
+
   height: 100%;
 
   object-fit: cover;
 
-  display: block;
-
 }
 
 
-
-/* =========================================================
-   AUTHOR INFORMATION
-   ========================================================= */
-
 .author-info-column {
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: flex-start;
 
   padding-top: 2px;
 
@@ -1344,8 +454,6 @@ body.dark .author-photo-frame {
   font-size: 32px;
 
   font-weight: 600;
-
-  line-height: 1.2;
 
   color: var(--accent);
 
@@ -1368,11 +476,6 @@ body.dark .author-photo-frame {
 
 }
 
-
-
-/* =========================================================
-   AUTHOR FACTS
-   ========================================================= */
 
 .author-facts {
 
@@ -1425,19 +528,10 @@ body.dark .author-photo-frame {
 
   font-size: 19px;
 
-  line-height: 1.35;
-
   color: var(--main-text);
-
-  font-weight: 500;
 
 }
 
-
-
-/* =========================================================
-   KNOWN FOR
-   ========================================================= */
 
 .author-known-for {
 
@@ -1454,10 +548,6 @@ body.dark .author-photo-frame {
 
   font-weight: 700;
 
-  letter-spacing: 0.04em;
-
-  color: var(--main-text);
-
   margin-bottom: 14px;
 
 }
@@ -1466,10 +556,6 @@ body.dark .author-photo-frame {
 .known-for-list {
 
   list-style: none;
-
-  padding: 0;
-
-  margin: 0;
 
   display: flex;
 
@@ -1507,8 +593,6 @@ body.dark .author-photo-frame {
 
   font-size: 24px;
 
-  line-height: 1;
-
   color: var(--accent);
 
 }
@@ -1518,100 +602,864 @@ body.dark .author-photo-frame {
 
   color: var(--main-text);
 
+}
+
+
+/* =========================================================
+   SLIDE 3 — WHERE THE BOOK STARTS
+   ========================================================= */
+
+.chapter-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+
+.chapter-content {
+
+  width: 100%;
+
+  max-width: 1660px;
+
+  margin: 0 auto;
+
+  padding-top: 25px;
+
+}
+
+
+.chapter-title {
+
+  font-size: 68px;
+
+  line-height: 1.08;
+
+  letter-spacing: -0.03em;
+
+  margin-bottom: 32px;
+
+}
+
+
+.chapter-title span {
+
+  color: var(--accent);
+
+}
+
+
+.chapter-intro {
+
+  max-width: 1050px;
+
+  font-size: 27px;
+
+  line-height: 1.55;
+
+  color: var(--secondary-text);
+
+}
+
+
+.big-question {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 30px;
+
+  margin-top: 45px;
+
+  margin-bottom: 55px;
+
+  padding: 25px 35px;
+
+  width: 1050px;
+
+  background: var(--soft-background);
+
+  border-left: 5px solid var(--accent);
+
+}
+
+
+.question-mark {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 65px;
+
+  height: 65px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  color: white;
+
+  font-size: 38px;
+
+  font-weight: 700;
+
+}
+
+
+.big-question p {
+
+  font-size: 29px;
+
+  color: var(--main-text);
+
+}
+
+
+.big-question strong {
+
+  color: var(--accent);
+
+}
+
+
+.story-flow {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
+
+}
+
+
+.story-step {
+
+  width: 360px;
+
+  min-height: 145px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  padding: 25px;
+
+  border: 1px solid var(--border);
+
+  background: var(--soft-background);
+
+}
+
+
+.step-number {
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  color: var(--accent);
+
+}
+
+
+.story-step h3 {
+
+  font-size: 26px;
+
+  margin-bottom: 10px;
+
+}
+
+
+.story-step p {
+
+  font-size: 19px;
+
+  line-height: 1.45;
+
+  color: var(--secondary-text);
+
+}
+
+
+.flow-arrow {
+
+  font-size: 35px;
+
+  color: var(--accent);
+
+}
+
+
+.chapter-ending {
+
+  margin-top: 45px;
+
+  font-size: 21px;
+
+  color: var(--secondary-text);
+
+}
+
+
+.chapter-ending span {
+
+  color: var(--main-text);
+
   font-weight: 600;
 
 }
 
 
-
 /* =========================================================
-   RESPONSIVE AUTHOR SLIDE
+   SLIDE 4 — MORSE CODE
    ========================================================= */
 
-@media (max-width: 1200px) {
+.morse-slide {
 
-  .author-slide .slide-title {
-    font-size: 40px;
-  }
+  border-top: 8px solid var(--accent);
 
-
-  .author-slide-header {
-    margin-bottom: 30px;
-  }
+}
 
 
-  .author-layout {
+.morse-header {
 
-    grid-template-columns: 260px 1fr;
+  display: flex;
 
-    column-gap: 45px;
+  justify-content: space-between;
 
-  }
+  align-items: flex-end;
 
+  margin-bottom: 40px;
 
-  .author-photo-frame {
-
-    width: 260px;
-    height: 260px;
-
-  }
+}
 
 
-  .author-role {
+.morse-title {
 
-    font-size: 26px;
+  font-size: 66px;
 
-  }
+  line-height: 1;
 
+  letter-spacing: -0.03em;
 
-  .author-bio {
-
-    font-size: 19px;
-
-    margin-bottom: 22px;
-
-  }
+}
 
 
-  .author-facts {
+.morse-subtitle {
 
-    gap: 10px 20px;
+  font-size: 22px;
 
-  }
+  color: var(--secondary-text);
 
+  margin-bottom: 4px;
 
-  .fact-value {
-
-    font-size: 16px;
-
-  }
+}
 
 
-  .known-for-title {
+.morse-layout {
 
-    font-size: 18px;
+  display: grid;
 
-  }
+  grid-template-columns: 46% 54%;
+
+  gap: 40px;
+
+  height: 735px;
+
+}
 
 
-  .known-for-list {
+/* LEFT */
 
-    gap: 8px;
+.morse-explanation {
 
-  }
+  padding-top: 15px;
+
+}
 
 
-  .known-for-list li {
+.morse-intro {
 
-    font-size: 16px;
+  max-width: 680px;
 
-  }
+  font-size: 25px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+}
+
+
+.signal-pair {
+
+  display: flex;
+
+  gap: 18px;
+
+  margin-top: 35px;
+
+}
+
+
+.signal {
+
+  width: 180px;
+
+  height: 100px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: var(--soft-background);
+
+  border: 1px solid var(--border);
+
+}
+
+
+.signal-symbol {
+
+  font-family: Georgia, serif;
+
+  font-size: 42px;
+
+  line-height: 1;
+
+  color: var(--accent);
+
+}
+
+
+.signal span:last-child {
+
+  margin-top: 8px;
+
+  font-size: 12px;
+
+  letter-spacing: 0.12em;
+
+  font-weight: 700;
+
+  color: var(--muted-text);
+
+}
+
+
+.morse-example {
+
+  margin-top: 38px;
+
+  padding: 25px;
+
+  width: 520px;
+
+  border-left: 4px solid var(--secondary-accent);
+
+  background: var(--soft-background);
+
+}
+
+
+.example-label {
+
+  font-size: 13px;
+
+  letter-spacing: 0.14em;
+
+  font-weight: 700;
+
+  color: var(--muted-text);
+
+  margin-bottom: 18px;
+
+}
+
+
+.example-row {
+
+  display: flex;
+
+  gap: 70px;
+
+  margin-bottom: 18px;
+
+}
+
+
+.example-row:last-child {
+
+  margin-bottom: 0;
+
+}
+
+
+.letter-example {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+}
+
+
+.letter {
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+}
+
+
+.equals {
+
+  color: var(--muted-text);
+
+}
+
+
+.code {
+
+  font-family: Georgia, serif;
+
+  font-size: 31px;
+
+  color: var(--accent);
+
+  min-width: 50px;
+
+}
+
+
+.morse-idea {
+
+  margin-top: 35px;
+
+  max-width: 700px;
+
+  font-size: 21px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+}
+
+
+.morse-idea strong {
+
+  color: var(--main-text);
+
+}
+
+
+/* RIGHT — TREE */
+
+.morse-tree-section {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+
+.tree-title {
+
+  width: 100%;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: baseline;
+
+  margin-bottom: 12px;
+
+}
+
+
+.tree-title span {
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  color: var(--main-text);
+
+}
+
+
+.tree-title small {
+
+  font-size: 14px;
+
+  color: var(--muted-text);
+
+}
+
+
+.tree-image-frame {
+
+  width: 720px;
+
+  height: 570px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+
+  background: #f7f7f7;
+
+}
+
+
+.morse-tree-image {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+
+}
+
+
+.tree-caption {
+
+  margin-top: 12px;
+
+  font-size: 16px;
+
+  color: var(--muted-text);
+
+}
+
+
+.morse-bottom {
+
+  position: absolute;
+
+  bottom: 40px;
+
+  left: 110px;
+
+  right: 110px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 18px;
+
+  font-size: 16px;
+
+  color: var(--secondary-text);
+
+}
+
+
+.morse-bottom span:first-child {
+
+  color: var(--main-text);
+
+  font-weight: 600;
+
+}
+
+
+.bottom-arrow {
+
+  color: var(--accent);
+
+  font-size: 22px;
 
 }
 
 
 /* =========================================================
-   KEYBOARD KEY
+   INVISIBLE CONTROLS
+   ========================================================= */
+
+.invisible-control {
+
+  position: fixed;
+
+  width: 1px;
+
+  height: 1px;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+}
+
+
+/* =========================================================
+   BLACK SCREEN
+   ========================================================= */
+
+#black-screen {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: none;
+
+  background: #000;
+
+}
+
+
+#black-screen.active {
+
+  display: block;
+
+}
+
+
+/* =========================================================
+   FULLSCREEN
+   ========================================================= */
+
+:fullscreen #presentation {
+
+  width: 100vw;
+
+  height: 100vh;
+
+}
+
+
+:fullscreen #deck {
+
+  width: 100vw;
+
+  height: 100vh;
+
+}
+
+
+/* =========================================================
+   HELP BUTTON
+   ========================================================= */
+
+#help-button {
+
+  position: fixed;
+
+  top: 22px;
+
+  right: 22px;
+
+  width: 34px;
+
+  height: 34px;
+
+  border: 1px solid rgba(128,128,128,0.35);
+
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.9);
+
+  color: #555;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  z-index: 5000;
+
+}
+
+
+body.dark #help-button {
+
+  background: #242424;
+
+  color: #ddd;
+
+  border-color: #444;
+
+}
+
+
+/* =========================================================
+   HELP PANEL
+   ========================================================= */
+
+#keyboard-help {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 4999;
+
+  display: none;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: rgba(0,0,0,0.35);
+
+}
+
+
+#keyboard-help.active {
+
+  display: flex;
+
+}
+
+
+.help-box {
+
+  width: 480px;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.25);
+
+  padding: 25px;
+
+}
+
+
+body.dark .help-box {
+
+  background: #202020;
+
+  border-color: #3a3a3a;
+
+  color: #fff;
+
+}
+
+
+.help-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #e5e5e5;
+
+  margin-bottom: 12px;
+
+}
+
+
+.help-header h3 {
+
+  font-size: 20px;
+
+}
+
+
+#close-help {
+
+  border: none;
+
+  background: transparent;
+
+  color: #777;
+
+  font-size: 27px;
+
+  cursor: pointer;
+
+}
+
+
+.shortcut {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 10px 0;
+
+}
+
+
+.shortcut span {
+
+  color: #555;
+
+  font-size: 15px;
+
+}
+
+
+body.dark .shortcut span {
+
+  color: #bbb;
+
+}
+
+
+.shortcut > div {
+
+  display: flex;
+
+  gap: 5px;
+
+}
+
+
+/* =========================================================
+   KEYBOARD KEYS
    ========================================================= */
 
 kbd {
@@ -1648,5 +1496,92 @@ body.dark kbd {
   border-color: #505050;
 
   color: #eee;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .slide-inner {
+
+    padding: 60px;
+
+  }
+
+
+  .title-section {
+
+    padding-left: 30px;
+
+  }
+
+
+  .title-section h1 {
+
+    font-size: 48px;
+
+  }
+
+
+  .book-cover {
+
+    width: 300px;
+
+  }
+
+
+  .chapter-title {
+
+    font-size: 50px;
+
+  }
+
+
+  .chapter-intro {
+
+    font-size: 22px;
+
+  }
+
+
+  .big-question {
+
+    width: 850px;
+
+  }
+
+
+  .story-step {
+
+    width: 280px;
+
+  }
+
+
+  .morse-title {
+
+    font-size: 50px;
+
+  }
+
+
+  .morse-layout {
+
+    grid-template-columns: 45% 55%;
+
+  }
+
+
+  .tree-image-frame {
+
+    width: 500px;
+
+    height: 450px;
+
+  }
 
 }

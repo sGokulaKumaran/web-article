@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
 
@@ -18,7 +19,7 @@
 <body>
 
   <!-- =====================================================
-       POWERPOINT-STYLE PRESENTATION
+       POWERPOINT PRESENTATION
        ===================================================== -->
 
   <main id="presentation">
@@ -26,16 +27,14 @@
     <div id="deck">
 
 
-      <!-- =====================================================
-           SLIDE 1
-           TITLE SLIDE
-           ===================================================== -->
+      <!-- =================================================
+           SLIDE 1 — TITLE
+           ================================================= -->
 
       <section class="slide active">
 
-        <div class="slide-inner">
+        <div class="slide-inner title-slide">
 
-          <!-- Left side: Book -->
           <div class="book-section">
 
             <img
@@ -47,7 +46,6 @@
           </div>
 
 
-          <!-- Right side: Information -->
           <div class="title-section">
 
             <p class="book-name">
@@ -100,16 +98,14 @@
 
 
 
-      <!-- =====================================================
-           SLIDE 2
-           ABOUT THE AUTHOR
-           ===================================================== -->
+      <!-- =================================================
+           SLIDE 2 — ABOUT THE AUTHOR
+           ================================================= -->
 
       <section class="slide author-slide">
 
         <div class="slide-inner">
 
-          <!-- Slide Title -->
           <div class="author-slide-header">
 
             <p class="slide-label">
@@ -123,13 +119,8 @@
           </div>
 
 
-          <!-- Author Information -->
           <div class="author-layout">
 
-
-            <!-- =================================================
-                 AUTHOR PHOTO
-                 ================================================= -->
 
             <div class="author-photo-column">
 
@@ -146,16 +137,11 @@
             </div>
 
 
-            <!-- =================================================
-                 AUTHOR DETAILS
-                 ================================================= -->
-
             <div class="author-info-column">
 
               <h3 class="author-role">
                 Programmer & Technical Author
               </h3>
-
 
               <p class="author-bio">
                 Charles Petzold is an American programmer and
@@ -163,8 +149,6 @@
                 computer technology from its fundamental ideas.
               </p>
 
-
-              <!-- Personal Information -->
 
               <div class="author-facts">
 
@@ -222,8 +206,6 @@
               </div>
 
 
-              <!-- Known For -->
-
               <div class="author-known-for">
 
                 <h4 class="known-for-title">
@@ -260,50 +242,137 @@
 
 
 
-      <!-- =====================================================
-           SLIDE 3
-           CHAPTER 1
-           ===================================================== -->
+      <!-- =================================================
+           SLIDE 3 — WHERE THE BOOK STARTS
+           ================================================= -->
 
-      <section class="slide">
+      <section class="slide chapter-slide">
 
-        <div class="slide-inner simple-slide">
+        <div class="slide-inner">
 
-          <div class="content">
+          <div class="chapter-content">
 
             <p class="slide-label">
-              CHAPTER 1
+              WHERE THE BOOK STARTS
             </p>
 
-            <h2>
-              Best Friends
+            <h2 class="chapter-title">
+              Before Computers,
+              <br />
+              <span>There Was Communication.</span>
             </h2>
 
-            <p class="slide-description">
-              How flashlights, wire, and Morse code reveal
-              the fundamental ideas behind binary communication
-              and digital technology.
+
+            <p class="chapter-intro">
+              Petzold does not begin with processors,
+              programming languages, or binary numbers.
+              He begins with a much simpler question:
             </p>
 
 
-            <div class="points">
+            <div class="big-question">
 
-              <div class="point">
-                <span>01</span>
-                <p>Flashlights and Codes</p>
-              </div>
+              <span class="question-mark">
+                ?
+              </span>
 
-              <div class="point">
-                <span>02</span>
-                <p>Morse Code</p>
-              </div>
-
-              <div class="point">
-                <span>03</span>
-                <p>Braille and Binary</p>
+              <div>
+                <p>
+                  How can one person
+                  <strong>send information</strong>
+                  to another?
+                </p>
               </div>
 
             </div>
+
+
+            <div class="story-flow">
+
+              <div class="story-step">
+
+                <span class="step-number">
+                  01
+                </span>
+
+                <div>
+
+                  <h3>
+                    Communication
+                  </h3>
+
+                  <p>
+                    We need a way to represent
+                    information.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="flow-arrow">
+                →
+              </div>
+
+
+              <div class="story-step">
+
+                <span class="step-number">
+                  02
+                </span>
+
+                <div>
+
+                  <h3>
+                    Signals
+                  </h3>
+
+                  <p>
+                    Information can be carried
+                    by a signal.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div class="flow-arrow">
+                →
+              </div>
+
+
+              <div class="story-step">
+
+                <span class="step-number">
+                  03
+                </span>
+
+                <div>
+
+                  <h3>
+                    Code
+                  </h3>
+
+                  <p>
+                    A system gives meaning
+                    to those signals.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <p class="chapter-ending">
+              <span>
+                This is where the journey begins.
+              </span>
+              From communication → to code → to computers.
+            </p>
 
           </div>
 
@@ -313,51 +382,239 @@
 
 
 
-      <!-- =====================================================
-           SLIDE 4
-           HARDWARE & LOGIC
-           ===================================================== -->
+      <!-- =================================================
+           SLIDE 4 — MORSE CODE
+           ================================================= -->
 
-      <section class="slide">
+      <section class="slide morse-slide">
 
-        <div class="slide-inner simple-slide">
+        <div class="slide-inner">
 
-          <div class="content">
+          <div class="morse-header">
 
-            <p class="slide-label">
-              HARDWARE & LOGIC
-            </p>
+            <div>
 
-            <h2>
-              From Relays to
-              <span>Logic Gates</span>
-            </h2>
+              <p class="slide-label">
+                THE FIRST CODE
+              </p>
 
-            <p class="slide-description">
-              Understanding how electricity, switches, and
-              relays form the fundamental building blocks
-              of modern computer processors.
-            </p>
-
-
-            <div class="points">
-
-              <div class="point">
-                <span>01</span>
-                <p>Electricity and Circuits</p>
-              </div>
-
-              <div class="point">
-                <span>02</span>
-                <p>AND, OR and NOT Gates</p>
-              </div>
-
-              <div class="point">
-                <span>03</span>
-                <p>Binary Addition</p>
-              </div>
+              <h2 class="morse-title">
+                Morse Code
+              </h2>
 
             </div>
+
+            <p class="morse-subtitle">
+              Turning letters into simple signals
+            </p>
+
+          </div>
+
+
+          <div class="morse-layout">
+
+
+            <!-- LEFT SIDE -->
+
+            <div class="morse-explanation">
+
+              <p class="morse-intro">
+                Instead of sending a complete letter,
+                Morse code represents each letter using
+                only two simple signals:
+              </p>
+
+
+              <div class="signal-pair">
+
+                <div class="signal">
+
+                  <span class="signal-symbol">
+                    .
+                  </span>
+
+                  <span>
+                    DOT
+                  </span>
+
+                </div>
+
+
+                <div class="signal">
+
+                  <span class="signal-symbol">
+                    −
+                  </span>
+
+                  <span>
+                    DASH
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div class="morse-example">
+
+                <p class="example-label">
+                  FOR EXAMPLE
+                </p>
+
+                <div class="example-row">
+
+                  <div class="letter-example">
+
+                    <span class="letter">
+                      E
+                    </span>
+
+                    <span class="equals">
+                      =
+                    </span>
+
+                    <span class="code">
+                      .
+                    </span>
+
+                  </div>
+
+
+                  <div class="letter-example">
+
+                    <span class="letter">
+                      T
+                    </span>
+
+                    <span class="equals">
+                      =
+                    </span>
+
+                    <span class="code">
+                      −
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="example-row">
+
+                  <div class="letter-example">
+
+                    <span class="letter">
+                      A
+                    </span>
+
+                    <span class="equals">
+                      =
+                    </span>
+
+                    <span class="code">
+                      .−
+                    </span>
+
+                  </div>
+
+
+                  <div class="letter-example">
+
+                    <span class="letter">
+                      M
+                    </span>
+
+                    <span class="equals">
+                      =
+                    </span>
+
+                    <span class="code">
+                      −−
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <p class="morse-idea">
+
+                <strong>
+                  The important idea:
+                </strong>
+
+                information can be represented
+                using a small number of simple states.
+
+              </p>
+
+            </div>
+
+
+
+            <!-- RIGHT SIDE — IMAGE -->
+
+            <div class="morse-tree-section">
+
+              <div class="tree-title">
+
+                <span>
+                  THE MORSE TREE
+                </span>
+
+                <small>
+                  Follow the path to remember the code
+                </small>
+
+              </div>
+
+
+              <div class="tree-image-frame">
+
+                <img
+                  src="public/image/codebook/morse-tree.png"
+                  alt="Morse code tree"
+                  class="morse-tree-image"
+                />
+
+              </div>
+
+
+              <p class="tree-caption">
+
+                Each step takes us through a simple
+                sequence of dots and dashes.
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="morse-bottom">
+
+            <span>
+              Morse Code
+            </span>
+
+            <span class="bottom-arrow">
+              →
+            </span>
+
+            <span>
+              Simple representation
+            </span>
+
+            <span class="bottom-arrow">
+              →
+            </span>
+
+            <span>
+              Understanding code
+            </span>
 
           </div>
 
@@ -366,9 +623,10 @@
       </section>
 
 
-      <!-- =====================================================
-           ADD MORE SLIDES HERE
-           ===================================================== -->
+
+      <!-- =================================================
+           ADD FUTURE SLIDES HERE
+           ================================================= -->
 
 
     </div>
@@ -440,99 +698,62 @@
 
       <div class="shortcut-list">
 
-
         <div class="shortcut">
-
-          <span>
-            Next slide
-          </span>
-
+          <span>Next slide</span>
           <div>
             <kbd>→</kbd>
             <kbd>Space</kbd>
             <kbd>Enter</kbd>
           </div>
-
         </div>
 
 
         <div class="shortcut">
-
-          <span>
-            Previous slide
-          </span>
-
+          <span>Previous slide</span>
           <div>
             <kbd>←</kbd>
           </div>
-
         </div>
 
 
         <div class="shortcut">
-
-          <span>
-            First slide
-          </span>
-
+          <span>First slide</span>
           <div>
             <kbd>Home</kbd>
           </div>
-
         </div>
 
 
         <div class="shortcut">
-
-          <span>
-            Last slide
-          </span>
-
+          <span>Last slide</span>
           <div>
             <kbd>End</kbd>
           </div>
-
         </div>
 
 
         <div class="shortcut">
-
-          <span>
-            Fullscreen
-          </span>
-
+          <span>Fullscreen</span>
           <div>
             <kbd>F</kbd>
           </div>
-
         </div>
 
 
         <div class="shortcut">
-
-          <span>
-            Light / Dark theme
-          </span>
-
+          <span>Light / Dark theme</span>
           <div>
             <kbd>T</kbd>
           </div>
-
         </div>
 
 
         <div class="shortcut">
-
-          <span>
-            Black screen
-          </span>
-
+          <span>Black screen</span>
           <div>
             <kbd>B</kbd>
           </div>
-
         </div>
-
 
       </div>
 
@@ -541,8 +762,8 @@
   </div>
 
 
-
   <script src="app.js"></script>
 
 </body>
+
 </html>

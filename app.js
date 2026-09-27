@@ -1,12 +1,10 @@
 /* =========================================================
-   POWERPOINT STYLE PRESENTATION CONTROLLER
+   POWERPOINT PRESENTATION CONTROLLER
    ========================================================= */
-
 
 const slides = Array.from(
   document.querySelectorAll(".slide")
 );
-
 
 let currentSlide = 0;
 
@@ -42,7 +40,7 @@ function showSlide(index) {
 
 
 /* =========================================================
-   NEXT
+   NEXT SLIDE
    ========================================================= */
 
 function nextSlide() {
@@ -57,7 +55,7 @@ function nextSlide() {
 
 
 /* =========================================================
-   PREVIOUS
+   PREVIOUS SLIDE
    ========================================================= */
 
 function previousSlide() {
@@ -80,9 +78,7 @@ document.addEventListener(
   function (event) {
 
 
-    /* -----------------------------------------------
-       NEXT SLIDE
-       ----------------------------------------------- */
+    /* NEXT */
 
     if (
       event.key === "ArrowRight" ||
@@ -101,9 +97,7 @@ document.addEventListener(
     }
 
 
-    /* -----------------------------------------------
-       PREVIOUS SLIDE
-       ----------------------------------------------- */
+    /* PREVIOUS */
 
     if (
       event.key === "ArrowLeft" ||
@@ -120,9 +114,7 @@ document.addEventListener(
     }
 
 
-    /* -----------------------------------------------
-       FIRST SLIDE
-       ----------------------------------------------- */
+    /* FIRST */
 
     if (event.key === "Home") {
 
@@ -135,9 +127,7 @@ document.addEventListener(
     }
 
 
-    /* -----------------------------------------------
-       LAST SLIDE
-       ----------------------------------------------- */
+    /* LAST */
 
     if (event.key === "End") {
 
@@ -150,9 +140,7 @@ document.addEventListener(
     }
 
 
-    /* -----------------------------------------------
-       FULLSCREEN
-       ----------------------------------------------- */
+    /* FULLSCREEN */
 
     if (
       event.key === "f" ||
@@ -168,9 +156,7 @@ document.addEventListener(
     }
 
 
-    /* -----------------------------------------------
-       DARK / LIGHT THEME
-       ----------------------------------------------- */
+    /* THEME */
 
     if (
       event.key === "t" ||
@@ -186,9 +172,7 @@ document.addEventListener(
     }
 
 
-    /* -----------------------------------------------
-       BLACK SCREEN
-       ----------------------------------------------- */
+    /* BLACK SCREEN */
 
     if (
       event.key === "b" ||
@@ -257,11 +241,9 @@ function toggleBlackScreen() {
   const screen =
     document.getElementById("black-screen");
 
-
   screen.classList.toggle("active");
 
 }
-
 
 
 /* =========================================================
@@ -288,7 +270,7 @@ showSlide(0);
 
 
 /* =========================================================
-   KEYBOARD HELP
+   HELP PANEL
    ========================================================= */
 
 const helpButton =
@@ -337,7 +319,7 @@ closeHelp.addEventListener(
 );
 
 
-/* Click outside the help box */
+/* Click outside */
 
 keyboardHelp.addEventListener(
   "click",
@@ -353,7 +335,7 @@ keyboardHelp.addEventListener(
 );
 
 
-/* Escape closes the help panel */
+/* Escape */
 
 document.addEventListener(
   "keydown",
