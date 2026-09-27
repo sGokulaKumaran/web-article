@@ -122,9 +122,13 @@ body {
 
   height: 1080px;
 
+  flex: none;
+
   overflow: hidden;
 
   background: var(--slide-background);
+
+  transform-origin: center center;
 
 }
 
@@ -415,6 +419,8 @@ body {
 
 .author-photo-frame {
 
+  position: relative;
+
   width: 360px;
 
   height: 360px;
@@ -432,6 +438,10 @@ body {
 
 
 .author-photo {
+
+  position: absolute;
+
+  inset: 0;
 
   width: 100%;
 

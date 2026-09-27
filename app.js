@@ -10,6 +10,49 @@ let currentSlide = 0;
 
 
 /* =========================================================
+   FIT DECK TO THE SCREEN
+   The deck is a fixed 1920 x 1080 stage. Without scaling,
+   any browser window shorter than 1080 px cuts off the
+   bottom of every slide. Scaling the whole stage keeps all
+   content visible on any screen, exactly like PowerPoint.
+   ========================================================= */
+
+const DECK_WIDTH = 1920;
+
+const DECK_HEIGHT = 1080;
+
+const deckElement =
+  document.getElementById("deck");
+
+
+function fitDeckToScreen() {
+
+  if (!deckElement) {
+
+    return;
+
+  }
+
+  const scale = Math.min(
+    window.innerWidth / DECK_WIDTH,
+    window.innerHeight / DECK_HEIGHT
+  );
+
+  deckElement.style.transform =
+    `scale(${scale})`;
+
+}
+
+
+window.addEventListener(
+  "resize",
+  fitDeckToScreen
+);
+
+fitDeckToScreen();
+
+
+/* =========================================================
    SHOW SLIDE
    ========================================================= */
 
