@@ -413,50 +413,312 @@ showSlide(0);
 
 
 /* =========================================================
-   CLICK-TO-ADVANCE (PowerPoint behaviour)
-   Clicks anywhere on the deck move to the next slide,
-   but interactive controls keep their own click behaviour.
+   SLIDE NAVIGATION
    ========================================================= */
 
+/*
+  DESKTOP:
+    - Normal click anywhere -> NEXT slide
+    - Right click -> PREVIOUS slide
+
+  MOBILE:
+    - Tap LEFT half -> PREVIOUS slide
+    - Tap RIGHT half -> NEXT slide
+    - Swipe LEFT -> NEXT slide
+    - Swipe RIGHT -> PREVIOUS slide
+
+  Interactive controls such as buttons and links are ignored.
+*/
+
 const deck = document.getElementById("deck");
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartTime = 0;
+let touchNavigationHandled = false;
+
+function isInteractiveElement(target) {
+  return !!target.closest(
+    "button, a, input, select, textarea, [role='button']"
+  );
+}
+
+function isTouchNavigationDevice() {
+  return window.matchMedia(
+    "(hover: none), (pointer: coarse)"
+  ).matches;
+}
+
+
+/* =========================================================
+   MOBILE â€” TOUCH START
+   ========================================================= */
+
+deck.addEventListener(
+  "pointerdown",
+  function (event) {
+
+    if (
+      event.pointerType !== "touch" &&
+      event.pointerType !== "pen"
+    ) {
+      return;
+    }
+
+    if (isInteractiveElement(event.target)) {
+      return;
+    }
+
+    touchStartX = event.clientX;
+    touchStartY = event.clientY;
+    touchStartTime = Date.now();
+
+  },
+  { passive: true }
+);
+
+
+/* =========================================================
+   MOBILE â€” TOUCH END
+   ========================================================= */
+
+deck.addEventListener(
+  "pointerup",
+  function (event) {
+
+    if (
+      event.pointerType !== "touch" &&
+      event.pointerType !== "pen"
+    ) {
+      return;
+    }
+
+    if (isInteractiveElement(event.target)) {
+      return;
+    }
+
+    const touchEndX = event.clientX;
+    const touchEndY = event.clientY;
+
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    const duration = Date.now() - touchStartTime;
+
+    const SWIPE_DISTANCE = 50;
+    const TAP_DISTANCE = 20;
+
+    /*
+      -------------------------------------------------------
+      SWIPE
+      -------------------------------------------------------
+    */
+
+    if (
+      absX >= SWIPE_DISTANCE &&
+      absX > absY
+    ) {
+
+      touchNavigationHandled = true;
+
+      /*
+        Swipe LEFT
+        finger moves from right -> left
+        => NEXT slide
+      */
+      if (deltaX < 0) {
+        nextSlide();
+      }
+
+      /*
+        Swipe RIGHT
+        finger moves from left -> right
+        => PREVIOUS slide
+      */
+      else {
+        previousSlide();
+      }
+
+      /*
+        Mobile browsers may fire a click immediately after
+        pointerup. Ignore that click so the slide changes only
+        once.
+      */
+      setTimeout(function () {
+        touchNavigationHandled = false;
+      }, 400);
+
+      return;
+    }
+
+
+    /*
+      -------------------------------------------------------
+      SINGLE TAP
+      -------------------------------------------------------
+    */
+
+    if (
+      absX <= TAP_DISTANCE &&
+      absY <= TAP_DISTANCE &&
+      duration < 700
+    ) {
+
+      const rect = deck.getBoundingClientRect();
+
+      /*
+        clientX is measured against the whole screen.
+
+        rect.left/right give us the actual visible deck
+        position after the 1920x1080 deck is scaled.
+      */
+      const xInsideDeck =
+        event.clientX - rect.left;
+
+      const deckWidth = rect.width;
+
+      /*
+        Ignore taps that somehow happen outside the deck.
+      */
+      if (
+        xInsideDeck < 0 ||
+        xInsideDeck > deckWidth
+      ) {
+        return;
+      }
+
+      touchNavigationHandled = true;
+
+      /*
+        LEFT HALF
+        => PREVIOUS
+      */
+      if (xInsideDeck < deckWidth / 2) {
+        previousSlide();
+      }
+
+      /*
+        RIGHT HALF
+        => NEXT
+      */
+      else {
+        nextSlide();
+      }
+
+      /*
+        Prevent the browser-generated click from moving
+        another slide.
+      */
+      setTimeout(function () {
+        touchNavigationHandled = false;
+      }, 400);
+    }
+
+  },
+  { passive: true }
+);
+
+
+/* =========================================================
+   MOBILE â€” TOUCH CANCELLED
+   A gesture can be interrupted mid-swipe (an incoming call,
+   a notification, the OS taking over for its own back/forward
+   gesture, etc). Without this, the next touch would still be
+   measured against the old, stale start point.
+   ========================================================= */
+
+deck.addEventListener(
+  "pointercancel",
+  function () {
+
+    touchStartX = 0;
+    touchStartY = 0;
+    touchStartTime = 0;
+
+  },
+  { passive: true }
+);
+
+
+/* =========================================================
+   DESKTOP â€” NORMAL CLICK
+   ========================================================= */
 
 deck.addEventListener(
   "click",
   function (event) {
 
-    /* Let real controls handle their own clicks */
-
-    if (
-      event.target.closest("button") ||
-      event.target.closest("a")
-    ) {
-
+    /*
+      If this click came immediately after a touch,
+      navigation has already happened.
+    */
+    if (touchNavigationHandled) {
       return;
-
     }
 
-    nextSlide();
+    /*
+      Never hijack real controls.
+    */
+    if (isInteractiveElement(event.target)) {
+      return;
+    }
 
-  }
-);
-
-
-/* Right click / left third goes back, like a presenter remote */
-
-deck.addEventListener(
-  "contextmenu",
-  function (event) {
-
-    event.preventDefault();  
-
-    previousSlide();
+    /*
+      Only use normal click-to-next behaviour on desktop.
+    */
+    if (
+      window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+      ).matches
+    ) {
+      nextSlide();
+    }
 
   }
 );
 
 
 /* =========================================================
-   BULB CIRCUIT — INTERACTIVE (Slide 6)
+   DESKTOP â€” RIGHT CLICK = PREVIOUS
+   ========================================================= */
+
+deck.addEventListener(
+  "contextmenu",
+  function (event) {
+
+    /*
+      On desktop:
+        right click -> previous slide
+
+      On mobile:
+        prevent the browser long-press menu,
+        but DO NOT change the slide here.
+        Mobile navigation is handled by pointerup above.
+      */
+    if (
+      window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+      ).matches
+    ) {
+
+      event.preventDefault();
+      previousSlide();
+
+    } else {
+
+      event.preventDefault();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   BULB CIRCUIT â€” INTERACTIVE (Slide 6)
    ========================================================= */
 
 let bulbAnimationId = null;
@@ -551,7 +813,7 @@ function initBulbDots() {
 }
 
 
-/* Animate dots — electrons move − to + */
+/* Animate dots â€” electrons move âˆ’ to + */
 
 function animateBulbDots() {
 
@@ -654,7 +916,7 @@ function bulbOn() {
   /* Status */
 
   document.getElementById("bulb-status")
-    .textContent = "Circuit CLOSED — Bulb ON";
+    .textContent = "Circuit CLOSED â€” Bulb ON";
 
   document.getElementById("btn-on")
     .classList.add("active");
@@ -717,7 +979,7 @@ function bulbOff() {
   /* Status */
 
   document.getElementById("bulb-status")
-    .textContent = "Circuit OPEN — Bulb OFF";
+    .textContent = "Circuit OPEN â€” Bulb OFF";
 
   document.getElementById("btn-on")
     .classList.remove("active");
@@ -729,7 +991,7 @@ function bulbOff() {
 
 
 /* =========================================================
-   RELAY — INTERACTIVE (Slide 8)
+   RELAY â€” INTERACTIVE (Slide 8)
    ========================================================= */
 
 let relayState = "off";
@@ -752,7 +1014,7 @@ function sleep(ms) {
 }
 
 
-/* Create dots — does NOT clear container */
+/* Create dots â€” does NOT clear container */
 
 function createRelayDots(
   pathId, containerId, count
@@ -891,7 +1153,7 @@ function highlightStep(n) {
 }
 
 
-/* ACTIVATE RELAY — step by step */
+/* ACTIVATE RELAY â€” step by step */
 
 async function activateRelay() {
 
@@ -909,7 +1171,7 @@ async function activateRelay() {
   btnReset.disabled = true;
 
 
-  /* STEP 1 — Current enters coil */
+  /* STEP 1 â€” Current enters coil */
 
   document.getElementById("relay-step-text")
     .textContent =
@@ -947,7 +1209,7 @@ async function activateRelay() {
   await sleep(1400);
 
 
-  /* STEP 2 — Magnetic field forms */
+  /* STEP 2 â€” Magnetic field forms */
 
   document.getElementById("relay-step-text")
     .textContent =
@@ -975,7 +1237,7 @@ async function activateRelay() {
   await sleep(1000);
 
 
-  /* STEP 3 — Arm pulled down */
+  /* STEP 3 â€” Arm pulled down */
 
   document.getElementById("relay-step-text")
     .textContent =
@@ -994,7 +1256,7 @@ async function activateRelay() {
   await sleep(900);
 
 
-  /* STEP 4 — Contact closes */
+  /* STEP 4 â€” Contact closes */
 
   document.getElementById("relay-step-text")
     .textContent =
@@ -1011,7 +1273,7 @@ async function activateRelay() {
   await sleep(1000);
 
 
-  /* STEP 5 — Secondary circuit completes */
+  /* STEP 5 â€” Secondary circuit completes */
 
   document.getElementById("relay-step-text")
     .textContent =
@@ -1089,7 +1351,7 @@ async function activateRelay() {
 }
 
 
-/* RESET RELAY — reverse sequence */
+/* RESET RELAY â€” reverse sequence */
 
 async function resetRelay() {
 
@@ -1235,7 +1497,7 @@ async function resetRelay() {
 
 
 /* =========================================================
-   LOGIC GATES — INTERACTIVE (Slides 10-12)
+   LOGIC GATES â€” INTERACTIVE (Slides 10-12)
    ========================================================= */
 
 const gateState = {
@@ -1286,7 +1548,7 @@ function setFlow(id, on) {
 }
 
 
-/* Master update — drives ALL visuals */
+/* Master update â€” drives ALL visuals */
 
 function updateGate(gate) {
 
@@ -1328,7 +1590,7 @@ function updateGate(gate) {
     updateBtn("or", "a", s.a);
     updateBtn("or", "b", s.b);
 
-    /* Current flow — either branch completes the circuit */
+    /* Current flow â€” either branch completes the circuit */
 
     /* Current flow - each relay drives its own coil circuit,
        and its output circuit only carries current once its
@@ -1383,7 +1645,7 @@ function updateGate(gate) {
     updateBtn("and", "a", s.a);
     updateBtn("and", "b", s.b);
 
-    /* Current flow — the series link and the bulb
+    /* Current flow â€” the series link and the bulb
        only carry current when BOTH contacts close */
 
     /* Current flow - the link between the two armature
@@ -1429,7 +1691,7 @@ function updateGate(gate) {
 
     updateBtn("not", "a", s.a);
 
-    /* Current flow — the current takes whichever
+    /* Current flow â€” the current takes whichever
        contact the arm is actually resting on */
 
     /* Current flow - the coil circuit is live while the
@@ -1563,7 +1825,7 @@ function updateNotRelay(on) {
   );
 
 
-  /* Arm — swings down from the upper (NC) contact,
+  /* Arm â€” swings down from the upper (NC) contact,
      which carries the supply, to the lower (NO)
      dead end. Drawn resting on the upper contact,
      so the energised position is a negative turn. */

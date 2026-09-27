@@ -2868,7 +2868,16 @@ body.dark .electron-dot {
    RESPONSIVE
    ========================================================= */
 
-@media (max-width: 1200px) {
+/* This breakpoint is for a real desktop/laptop browser window
+   being resized narrower than 1200px (mouse + hover available).
+   It must NOT apply on phones/tablets: those are already handled
+   by the full-deck scale-to-fit in app.js, which alone keeps
+   mobile pixel-identical to the PC layout at any size or
+   orientation. Letting this block also run on touch devices
+   would shrink fonts/layout a second time on top of that scale,
+   making mobile look different from PC instead of just smaller. */
+
+@media (max-width: 1200px) and (hover: hover) and (pointer: fine) {
 
   .slide-inner {
 
@@ -2959,7 +2968,12 @@ body.dark .electron-dot {
   -webkit-tap-highlight-color: transparent;
 }
 
-@media (max-width: 600px) {
+/* Detects an actual touch device (phone or tablet) rather than a
+   viewport width, so this applies in BOTH portrait and landscape.
+   A width check like "max-width: 600px" misses landscape phones,
+   which are commonly 700-950px wide. */
+
+@media (hover: none) and (pointer: coarse) {
 
   html,
   body {
@@ -2973,12 +2987,25 @@ body.dark .electron-dot {
     width: 100vw;
     height: 100dvh;
     overflow: hidden;
+
+    /* Keep the deck clear of notches / rounded corners /
+       home indicators on phones. Resolves to 0px on any
+       device without a safe area, so it's a no-op elsewhere. */
+    padding: env(safe-area-inset-top, 0px)
+             env(safe-area-inset-right, 0px)
+             env(safe-area-inset-bottom, 0px)
+             env(safe-area-inset-left, 0px);
   }
 
   #deck {
     max-width: none;
     max-height: none;
     user-select: none;
+
+    /* Let our own pointerdown/pointerup swipe logic fully own
+       horizontal gestures instead of the browser's edge-swipe
+       back/forward navigation gesture. */
+    touch-action: none;
   }
 
   .slide {
