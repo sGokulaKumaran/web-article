@@ -1208,6 +1208,563 @@ body {
 
 
 /* =========================================================
+   SLIDE 5 — ELECTRICITY
+   ========================================================= */
+
+.electricity-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+
+.electricity-layout {
+
+  display: grid;
+
+  grid-template-columns: 55% 45%;
+
+  gap: 50px;
+
+  align-items: center;
+
+}
+
+
+.electricity-title {
+
+  font-size: 58px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.03em;
+
+  margin-bottom: 20px;
+
+}
+
+
+.electricity-title span {
+
+  color: var(--accent);
+
+}
+
+
+.electricity-intro {
+
+  font-size: 24px;
+
+  line-height: 1.55;
+
+  color: var(--secondary-text);
+
+  max-width: 850px;
+
+  margin-bottom: 28px;
+
+}
+
+
+.electricity-points {
+
+  list-style: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+}
+
+
+.electricity-point {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 16px;
+
+  padding: 18px 22px;
+
+  background: var(--soft-background);
+
+  border: 1px solid var(--border);
+
+  border-left: 4px solid var(--accent);
+
+}
+
+
+.electricity-point .point-num {
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: var(--accent);
+
+  letter-spacing: 0.12em;
+
+  white-space: nowrap;
+
+  min-width: 24px;
+
+}
+
+
+.electricity-point p {
+
+  font-size: 20px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+}
+
+
+.electricity-point strong {
+
+  color: var(--main-text);
+
+}
+
+
+.circuit-diagram-frame {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+.circuit-diagram-frame svg {
+
+  max-width: 100%;
+
+}
+
+
+/* =========================================================
+   SLIDE 6 — INTERACTIVE BULB
+   ========================================================= */
+
+.bulb-interactive-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+
+.bulb-interactive-layout {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 20px;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+.bulb-interactive-header {
+
+  text-align: center;
+
+  margin-bottom: 8px;
+
+}
+
+
+.bulb-interactive-title {
+
+  font-size: 52px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  margin-bottom: 10px;
+
+}
+
+
+.bulb-interactive-subtitle {
+
+  font-size: 22px;
+
+  color: var(--secondary-text);
+
+}
+
+
+.circuit-controls {
+
+  display: flex;
+
+  gap: 16px;
+
+  margin-top: 10px;
+
+}
+
+
+.circuit-btn {
+
+  padding: 14px 40px;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  border: 2px solid var(--accent);
+
+  border-radius: 6px;
+
+  background: var(--slide-background);
+
+  color: var(--accent);
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+
+  font-family: inherit;
+
+  letter-spacing: 0.05em;
+
+}
+
+
+.circuit-btn:hover {
+
+  background: var(--accent);
+
+  color: white;
+
+}
+
+
+.circuit-btn.active {
+
+  background: var(--accent);
+
+  color: white;
+
+}
+
+
+.circuit-status {
+
+  margin-top: 12px;
+
+  padding: 12px 30px;
+
+  background: var(--soft-background);
+
+  border-left: 5px solid var(--accent);
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  color: var(--accent);
+
+}
+
+
+.current-labels {
+
+  display: flex;
+
+  gap: 40px;
+
+  margin-top: 6px;
+
+}
+
+
+.current-label-item {
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+}
+
+
+.current-label-item.electron {
+
+  color: #2678c0;
+
+}
+
+
+.current-label-item.conventional {
+
+  color: var(--secondary-accent);
+
+}
+
+
+/* =========================================================
+   SLIDE 7 — RELAY EXPLANATION
+   ========================================================= */
+
+.relay-explain-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+
+.relay-explain-layout {
+
+  display: grid;
+
+  grid-template-columns: 48% 52%;
+
+  gap: 50px;
+
+  align-items: center;
+
+}
+
+
+.relay-explain-title {
+
+  font-size: 58px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.03em;
+
+  margin-bottom: 20px;
+
+}
+
+
+.relay-explain-title span {
+
+  color: var(--accent);
+
+}
+
+
+.relay-explain-intro {
+
+  font-size: 24px;
+
+  line-height: 1.55;
+
+  color: var(--secondary-text);
+
+  margin-bottom: 28px;
+
+}
+
+
+.relay-chain {
+
+  list-style: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+
+.relay-chain li {
+
+  font-size: 21px;
+
+  font-weight: 600;
+
+  color: var(--main-text);
+
+  padding: 8px 18px;
+
+  background: var(--soft-background);
+
+  border: 1px solid var(--border);
+
+  border-left: 4px solid var(--secondary-accent);
+
+}
+
+
+.relay-chain .chain-arrow-item {
+
+  background: transparent;
+
+  border: none;
+
+  border-left: none;
+
+  color: var(--secondary-accent);
+
+  font-size: 24px;
+
+  text-align: center;
+
+  padding: 2px 0;
+
+}
+
+
+/* =========================================================
+   SLIDE 8 — INTERACTIVE RELAY
+   ========================================================= */
+
+.relay-interactive-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+
+.relay-interactive-layout {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 14px;
+
+  width: 100%;
+
+  height: 100%;
+
+}
+
+
+.relay-interactive-header {
+
+  text-align: center;
+
+  margin-bottom: 4px;
+
+}
+
+
+.relay-interactive-title {
+
+  font-size: 48px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  margin-bottom: 8px;
+
+}
+
+
+.relay-step-text {
+
+  font-size: 22px;
+
+  color: var(--secondary-text);
+
+  min-height: 34px;
+
+  transition: opacity 0.3s;
+
+}
+
+
+.relay-controls {
+
+  display: flex;
+
+  gap: 16px;
+
+  margin-top: 8px;
+
+}
+
+
+.relay-status-box {
+
+  margin-top: 10px;
+
+  padding: 12px 30px;
+
+  background: var(--soft-background);
+
+  border-left: 5px solid var(--accent);
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  color: var(--accent);
+
+}
+
+
+/* =========================================================
+   SVG UTILITIES
+   ========================================================= */
+
+.electron-dot {
+
+  fill: #2678c0;
+
+}
+
+
+.mag-field-line {
+
+  stroke: var(--secondary-accent);
+
+  stroke-width: 1.5;
+
+  fill: none;
+
+  opacity: 0;
+
+  transition: opacity 0.6s;
+
+}
+
+
+.mag-field-line.visible {
+
+  opacity: 0.6;
+
+}
+
+
+body.dark .electron-dot {
+
+  fill: #60a5fa;
+
+}
+
+
+/* =========================================================
    INVISIBLE CONTROLS
    ========================================================= */
 
