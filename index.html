@@ -17,9 +17,10 @@
 
 <body>
 
-  <!--
-    PowerPoint-style presentation area
-  -->
+  <!-- =====================================================
+       POWERPOINT-STYLE PRESENTATION
+       ===================================================== -->
+
   <main id="presentation">
 
     <div id="deck">
@@ -27,6 +28,7 @@
 
       <!-- =====================================================
            SLIDE 1
+           TITLE SLIDE
            ===================================================== -->
 
       <section class="slide active">
@@ -100,6 +102,167 @@
 
       <!-- =====================================================
            SLIDE 2
+           ABOUT THE AUTHOR
+           ===================================================== -->
+
+      <section class="slide author-slide">
+
+        <div class="slide-inner">
+
+          <!-- Slide Title -->
+          <div class="author-slide-header">
+
+            <p class="slide-label">
+              ABOUT THE AUTHOR
+            </p>
+
+            <h2 class="slide-title">
+              Charles Petzold
+            </h2>
+
+          </div>
+
+
+          <!-- Author Information -->
+          <div class="author-layout">
+
+
+            <!-- =================================================
+                 AUTHOR PHOTO
+                 ================================================= -->
+
+            <div class="author-photo-column">
+
+              <div class="author-photo-frame">
+
+                <img
+                  src="public/image/codebook/Charles%20petzold.jpg"
+                  alt="Charles Petzold"
+                  class="author-photo"
+                />
+
+              </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 AUTHOR DETAILS
+                 ================================================= -->
+
+            <div class="author-info-column">
+
+              <h3 class="author-role">
+                Programmer & Technical Author
+              </h3>
+
+
+              <p class="author-bio">
+                Charles Petzold is an American programmer and
+                technical author best known for explaining
+                computer technology from its fundamental ideas.
+              </p>
+
+
+              <!-- Personal Information -->
+
+              <div class="author-facts">
+
+                <div class="author-fact">
+
+                  <span class="fact-label">
+                    BORN
+                  </span>
+
+                  <span class="fact-value">
+                    February 2, 1953
+                  </span>
+
+                </div>
+
+
+                <div class="author-fact">
+
+                  <span class="fact-label">
+                    FROM
+                  </span>
+
+                  <span class="fact-value">
+                    New Brunswick, New Jersey, USA
+                  </span>
+
+                </div>
+
+
+                <div class="author-fact">
+
+                  <span class="fact-label">
+                    EDUCATION
+                  </span>
+
+                  <span class="fact-value">
+                    Stevens Institute of Technology
+                  </span>
+
+                </div>
+
+
+                <div class="author-fact">
+
+                  <span class="fact-label">
+                    DEGREE
+                  </span>
+
+                  <span class="fact-value">
+                    B.S. & M.S. in Mathematics · 1975
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <!-- Known For -->
+
+              <div class="author-known-for">
+
+                <h4 class="known-for-title">
+                  Known for
+                </h4>
+
+                <ul class="known-for-list">
+
+                  <li>
+                    <strong>Code</strong> —
+                    explaining how computers work from the ground up
+                  </li>
+
+                  <li>
+                    <strong>Programming Windows</strong> —
+                    a classic guide to Windows programming
+                  </li>
+
+                  <li>
+                    Making complex technical ideas easier to understand
+                  </li>
+
+                </ul>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <!-- =====================================================
+           SLIDE 3
+           CHAPTER 1
            ===================================================== -->
 
       <section class="slide">
@@ -151,7 +314,8 @@
 
 
       <!-- =====================================================
-           SLIDE 3
+           SLIDE 4
+           HARDWARE & LOGIC
            ===================================================== -->
 
       <section class="slide">
@@ -202,16 +366,9 @@
       </section>
 
 
-
-      <!--
-        Add more slides here.
-
-        Example:
-
-        <section class="slide">
-          ...
-        </section>
-      -->
+      <!-- =====================================================
+           ADD MORE SLIDES HERE
+           ===================================================== -->
 
 
     </div>
@@ -219,12 +376,10 @@
   </main>
 
 
-  <!--
-    Invisible presentation controls.
 
-    They exist for functionality only.
-    Nothing is displayed to the audience.
-  -->
+  <!-- =====================================================
+       INVISIBLE PRESENTATION CONTROLS
+       ===================================================== -->
 
   <button
     id="previous"
@@ -239,84 +394,153 @@
   ></button>
 
 
-  <!-- Black screen -->
+
+  <!-- =====================================================
+       BLACK SCREEN
+       ===================================================== -->
+
   <div id="black-screen"></div>
 
-  <!-- Keyboard Help -->
-<button id="help-button" aria-label="Keyboard shortcuts">
-  ?
-</button>
 
-<div id="keyboard-help" aria-hidden="true">
 
-  <div class="help-box">
+  <!-- =====================================================
+       KEYBOARD HELP
+       ===================================================== -->
 
-    <div class="help-header">
-      <h3>Keyboard Shortcuts</h3>
+  <button
+    id="help-button"
+    aria-label="Keyboard shortcuts"
+  >
+    ?
+  </button>
 
-      <button id="close-help" aria-label="Close">
-        ×
-      </button>
-    </div>
 
-    <div class="shortcut-list">
+  <div
+    id="keyboard-help"
+    aria-hidden="true"
+  >
 
-      <div class="shortcut">
-        <span>Next slide</span>
-        <div>
-          <kbd>→</kbd>
-          <kbd>Space</kbd>
-          <kbd>Enter</kbd>
-        </div>
+    <div class="help-box">
+
+      <div class="help-header">
+
+        <h3>
+          Keyboard Shortcuts
+        </h3>
+
+        <button
+          id="close-help"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
       </div>
 
-      <div class="shortcut">
-        <span>Previous slide</span>
-        <div>
-          <kbd>←</kbd>
-        </div>
-      </div>
 
-      <div class="shortcut">
-        <span>First slide</span>
-        <div>
-          <kbd>Home</kbd>
-        </div>
-      </div>
+      <div class="shortcut-list">
 
-      <div class="shortcut">
-        <span>Last slide</span>
-        <div>
-          <kbd>End</kbd>
-        </div>
-      </div>
 
-      <div class="shortcut">
-        <span>Fullscreen</span>
-        <div>
-          <kbd>F</kbd>
-        </div>
-      </div>
+        <div class="shortcut">
 
-      <div class="shortcut">
-        <span>Light / Dark theme</span>
-        <div>
-          <kbd>T</kbd>
-        </div>
-      </div>
+          <span>
+            Next slide
+          </span>
 
-      <div class="shortcut">
-        <span>Black screen</span>
-        <div>
-          <kbd>B</kbd>
+          <div>
+            <kbd>→</kbd>
+            <kbd>Space</kbd>
+            <kbd>Enter</kbd>
+          </div>
+
         </div>
+
+
+        <div class="shortcut">
+
+          <span>
+            Previous slide
+          </span>
+
+          <div>
+            <kbd>←</kbd>
+          </div>
+
+        </div>
+
+
+        <div class="shortcut">
+
+          <span>
+            First slide
+          </span>
+
+          <div>
+            <kbd>Home</kbd>
+          </div>
+
+        </div>
+
+
+        <div class="shortcut">
+
+          <span>
+            Last slide
+          </span>
+
+          <div>
+            <kbd>End</kbd>
+          </div>
+
+        </div>
+
+
+        <div class="shortcut">
+
+          <span>
+            Fullscreen
+          </span>
+
+          <div>
+            <kbd>F</kbd>
+          </div>
+
+        </div>
+
+
+        <div class="shortcut">
+
+          <span>
+            Light / Dark theme
+          </span>
+
+          <div>
+            <kbd>T</kbd>
+          </div>
+
+        </div>
+
+
+        <div class="shortcut">
+
+          <span>
+            Black screen
+          </span>
+
+          <div>
+            <kbd>B</kbd>
+          </div>
+
+        </div>
+
+
       </div>
 
     </div>
 
   </div>
 
-</div>
+
 
   <script src="app.js"></script>
 

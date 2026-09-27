@@ -263,48 +263,6 @@ function toggleBlackScreen() {
 }
 
 
-/* =========================================================
-   CLICK NAVIGATION
-   ========================================================= */
-
-/*
-  Just like clicking through a presentation:
-
-  Left half  → Previous
-  Right half → Next
-*/
-
-document
-  .getElementById("deck")
-  .addEventListener(
-    "click",
-    function (event) {
-
-      const rect =
-        this.getBoundingClientRect();
-
-
-      const clickPosition =
-        event.clientX - rect.left;
-
-
-      const middle =
-        rect.width / 2;
-
-
-      if (clickPosition > middle) {
-
-        nextSlide();
-
-      } else {
-
-        previousSlide();
-
-      }
-
-    }
-  );
-
 
 /* =========================================================
    BLACK SCREEN CLICK

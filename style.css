@@ -387,6 +387,251 @@ body {
 
 
 /* =========================================================
+   ABOUT THE AUTHOR SLIDE (SLIDE 2)
+   ========================================================= */
+
+.author-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+.author-slide .slide-inner {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-start;
+
+}
+
+/* Slide Header & Title */
+
+.author-slide-header {
+
+  margin-bottom: 55px;
+
+}
+
+.author-slide .slide-title {
+
+  font-size: 52px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.02em;
+
+  color: var(--main-text);
+
+  display: inline-block;
+
+  position: relative;
+
+}
+
+.author-slide .slide-title::after {
+
+  content: "";
+
+  display: block;
+
+  width: 56px;
+
+  height: 4px;
+
+  background: var(--accent);
+
+  margin-top: 14px;
+
+  border-radius: 2px;
+
+}
+
+/* Two-column author layout */
+
+.author-layout {
+
+  display: grid;
+
+  grid-template-columns: 360px 1fr;
+
+  column-gap: 90px;
+
+  align-items: start;
+
+  max-width: 1560px;
+
+}
+
+/* Author Photo Column */
+
+.author-photo-column {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+}
+
+.author-photo-frame {
+
+  width: 360px;
+
+  height: 360px;
+
+  border-radius: 4px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+
+  background: var(--soft-background);
+
+  box-shadow: 14px 16px 30px rgba(0, 0, 0, 0.16);
+
+}
+
+body.dark .author-photo-frame {
+
+  box-shadow: 14px 16px 30px rgba(0, 0, 0, 0.45);
+
+}
+
+.author-photo {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+}
+
+/* Author Info Column */
+
+.author-info-column {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-start;
+
+  padding-top: 4px;
+
+}
+
+.author-name {
+
+  font-size: 42px;
+
+  font-weight: 700;
+
+  line-height: 1.15;
+
+  letter-spacing: -0.015em;
+
+  color: var(--main-text);
+
+  margin-bottom: 22px;
+
+}
+
+.author-bio {
+
+  font-size: 25px;
+
+  line-height: 1.6;
+
+  color: var(--secondary-text);
+
+  max-width: 980px;
+
+  margin-bottom: 45px;
+
+}
+
+/* Known For Section */
+
+.author-known-for {
+
+  border-left: 4px solid var(--accent);
+
+  padding-left: 24px;
+
+}
+
+.known-for-title {
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+
+  color: var(--main-text);
+
+  margin-bottom: 18px;
+
+}
+
+.known-for-list {
+
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+}
+
+.known-for-list li {
+
+  position: relative;
+
+  padding-left: 28px;
+
+  font-size: 22px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+}
+
+.known-for-list li::before {
+
+  content: "•";
+
+  position: absolute;
+
+  left: 4px;
+
+  top: -2px;
+
+  font-size: 26px;
+
+  line-height: 1;
+
+  color: var(--accent);
+
+}
+
+
+/* =========================================================
    NORMAL SLIDES
    ========================================================= */
 
@@ -649,6 +894,72 @@ body {
 
   }
 
+  .author-slide .slide-title {
+
+    font-size: 40px;
+
+  }
+
+  .author-slide-header {
+
+    margin-bottom: 35px;
+
+  }
+
+  .author-layout {
+
+    grid-template-columns: 260px 1fr;
+
+    column-gap: 45px;
+
+  }
+
+  .author-photo-frame {
+
+    width: 260px;
+
+    height: 260px;
+
+  }
+
+  .author-name {
+
+    font-size: 32px;
+
+    margin-bottom: 15px;
+
+  }
+
+  .author-bio {
+
+    font-size: 20px;
+
+    margin-bottom: 30px;
+
+  }
+
+  .known-for-title {
+
+    font-size: 19px;
+
+    margin-bottom: 14px;
+
+  }
+
+  .known-for-list {
+
+    gap: 12px;
+
+  }
+
+  .known-for-list li {
+
+    font-size: 18px;
+
+    padding-left: 22px;
+
+  }
+
 }
 
 
@@ -874,6 +1185,427 @@ body.dark .shortcut span {
   display: flex;
 
   gap: 5px;
+
+}
+
+
+/* =========================================================
+   ABOUT THE AUTHOR SLIDE
+   ========================================================= */
+
+.author-slide {
+  border-top: 8px solid var(--accent);
+}
+
+
+.author-slide .slide-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+/* =========================================================
+   AUTHOR SLIDE HEADER
+   ========================================================= */
+
+.author-slide-header {
+  margin-bottom: 42px;
+}
+
+
+.author-slide .slide-label {
+  margin-bottom: 12px;
+}
+
+
+.author-slide .slide-title {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--main-text);
+
+  display: inline-block;
+  position: relative;
+}
+
+
+.author-slide .slide-title::after {
+  content: "";
+
+  display: block;
+
+  width: 56px;
+  height: 4px;
+
+  background: var(--accent);
+
+  margin-top: 14px;
+
+  border-radius: 2px;
+}
+
+
+
+/* =========================================================
+   AUTHOR LAYOUT
+   ========================================================= */
+
+.author-layout {
+
+  display: grid;
+
+  grid-template-columns: 360px 1fr;
+
+  column-gap: 85px;
+
+  align-items: start;
+
+  max-width: 1580px;
+}
+
+
+
+/* =========================================================
+   AUTHOR PHOTO
+   ========================================================= */
+
+.author-photo-column {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+}
+
+
+.author-photo-frame {
+
+  width: 360px;
+  height: 360px;
+
+  border-radius: 6px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+
+  background: var(--soft-background);
+
+  box-shadow:
+    14px 16px 30px rgba(0, 0, 0, 0.16);
+
+}
+
+
+body.dark .author-photo-frame {
+
+  box-shadow:
+    14px 16px 30px rgba(0, 0, 0, 0.45);
+
+}
+
+
+.author-photo {
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+}
+
+
+
+/* =========================================================
+   AUTHOR INFORMATION
+   ========================================================= */
+
+.author-info-column {
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: flex-start;
+
+  padding-top: 2px;
+
+}
+
+
+.author-role {
+
+  font-size: 32px;
+
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  color: var(--accent);
+
+  margin-bottom: 16px;
+
+}
+
+
+.author-bio {
+
+  font-size: 23px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+  max-width: 1000px;
+
+  margin-bottom: 30px;
+
+}
+
+
+
+/* =========================================================
+   AUTHOR FACTS
+   ========================================================= */
+
+.author-facts {
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 14px 35px;
+
+  max-width: 1050px;
+
+  margin-bottom: 32px;
+
+}
+
+
+.author-fact {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 14px 18px;
+
+  background: var(--soft-background);
+
+  border: 1px solid var(--border);
+
+  border-left: 3px solid var(--accent);
+
+}
+
+
+.fact-label {
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.14em;
+
+  color: var(--accent);
+
+}
+
+
+.fact-value {
+
+  font-size: 19px;
+
+  line-height: 1.35;
+
+  color: var(--main-text);
+
+  font-weight: 500;
+
+}
+
+
+
+/* =========================================================
+   KNOWN FOR
+   ========================================================= */
+
+.author-known-for {
+
+  border-left: 4px solid var(--accent);
+
+  padding-left: 24px;
+
+}
+
+
+.known-for-title {
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.04em;
+
+  color: var(--main-text);
+
+  margin-bottom: 14px;
+
+}
+
+
+.known-for-list {
+
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 11px;
+
+}
+
+
+.known-for-list li {
+
+  position: relative;
+
+  padding-left: 25px;
+
+  font-size: 19px;
+
+  line-height: 1.4;
+
+  color: var(--secondary-text);
+
+}
+
+
+.known-for-list li::before {
+
+  content: "•";
+
+  position: absolute;
+
+  left: 2px;
+
+  top: -2px;
+
+  font-size: 24px;
+
+  line-height: 1;
+
+  color: var(--accent);
+
+}
+
+
+.known-for-list strong {
+
+  color: var(--main-text);
+
+  font-weight: 600;
+
+}
+
+
+
+/* =========================================================
+   RESPONSIVE AUTHOR SLIDE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .author-slide .slide-title {
+    font-size: 40px;
+  }
+
+
+  .author-slide-header {
+    margin-bottom: 30px;
+  }
+
+
+  .author-layout {
+
+    grid-template-columns: 260px 1fr;
+
+    column-gap: 45px;
+
+  }
+
+
+  .author-photo-frame {
+
+    width: 260px;
+    height: 260px;
+
+  }
+
+
+  .author-role {
+
+    font-size: 26px;
+
+  }
+
+
+  .author-bio {
+
+    font-size: 19px;
+
+    margin-bottom: 22px;
+
+  }
+
+
+  .author-facts {
+
+    gap: 10px 20px;
+
+  }
+
+
+  .fact-value {
+
+    font-size: 16px;
+
+  }
+
+
+  .known-for-title {
+
+    font-size: 18px;
+
+  }
+
+
+  .known-for-list {
+
+    gap: 8px;
+
+  }
+
+
+  .known-for-list li {
+
+    font-size: 16px;
+
+  }
 
 }
 
