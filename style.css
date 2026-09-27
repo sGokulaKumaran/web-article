@@ -2204,6 +2204,373 @@ body.dark .electron-dot {
 
 
 /* =========================================================
+   ELECTRIC CURRENT FLOW
+   Dashed overlay paths sit on top of each wire.
+   The .flowing class animates the dashes so the
+   current visibly travels from source to bulb.
+   ========================================================= */
+
+.flow-path {
+
+  fill: none;
+
+  stroke: #38bdf8;
+
+  stroke-width: 5;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+
+  stroke-dasharray: 10 14;
+
+}
+
+
+.flow-path.flowing {
+
+  opacity: 0.95;
+
+  animation: current-flow 0.55s linear infinite;
+
+}
+
+
+.flow-path.flowing.reverse {
+
+  animation-direction: reverse;
+
+}
+
+
+/* Slower pulse on the coil input wires */
+
+.flow-path.slow.flowing {
+
+  animation-duration: 0.9s;
+
+}
+
+
+@keyframes current-flow {
+
+  from {
+
+    stroke-dashoffset: 0;
+
+  }
+
+  to {
+
+    stroke-dashoffset: -24;
+
+  }
+
+}
+
+
+/* Flow legend chip on gate slides */
+
+.flow-legend {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 4px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: var(--muted-text);
+
+}
+
+
+.flow-legend-chip {
+
+  display: inline-block;
+
+  width: 46px;
+
+  height: 6px;
+
+  border-radius: 3px;
+
+  background:
+
+    repeating-linear-gradient(
+      90deg,
+      #38bdf8 0 10px,
+      transparent 10px 20px
+    );
+
+}
+
+
+/* =========================================================
+   SLIDE 13 — THANK YOU
+   ========================================================= */
+
+.thanks-slide {
+
+  border-top: 8px solid var(--accent);
+
+}
+
+
+.thanks-inner {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+/* Circuit backdrop sits behind the text */
+
+.thanks-circuit {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  opacity: 0.5;
+
+  pointer-events: none;
+
+}
+
+
+.thanks-wires .flow-path {
+
+  stroke-width: 4;
+
+}
+
+
+/* Fade the backdrop out from behind the headline */
+
+.thanks-content {
+
+  position: relative;
+
+  z-index: 2;
+
+  text-align: center;
+
+  padding: 60px 90px;
+
+  background:
+
+    radial-gradient(
+      ellipse at center,
+      var(--slide-background) 0%,
+      var(--slide-background) 45%,
+      transparent 78%
+    );
+
+}
+
+
+.thanks-label {
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.22em;
+
+  color: var(--accent);
+
+  margin-bottom: 22px;
+
+}
+
+
+.thanks-heading {
+
+  font-size: 116px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: -0.02em;
+
+  color: var(--accent);
+
+}
+
+
+/* Any Questions? line under the headline */
+
+.thanks-qa {
+
+  margin-top: 20px;
+
+  font-size: 26px;
+
+  font-weight: 600;
+
+  color: var(--accent);
+
+}
+
+
+/* Book title quote */
+
+.thanks-quote {
+
+  max-width: 940px;
+
+  margin: 42px auto 0;
+
+  font-size: 34px;
+
+  font-weight: 400;
+
+  line-height: 1.35;
+
+  color: var(--main-text);
+
+}
+
+.thanks-quote cite {
+
+  display: block;
+
+  margin-top: 16px;
+
+  font-size: 24px;
+
+  font-style: normal;
+
+  color: var(--secondary-text);
+
+}
+
+
+/* One-line summary */
+
+.thanks-blurb {
+
+  max-width: 880px;
+
+/* Download button */
+
+.thanks-download {
+
+  display: inline-block;
+
+  margin-top: 40px;
+
+  padding: 20px 54px;
+
+  border-radius: 10px;
+
+  background: var(--accent);
+
+  color: #ffffff;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease,
+              filter 0.15s ease;
+
+}
+
+.thanks-download:hover {
+
+  filter: brightness(1.08);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.3);
+
+}
+
+.thanks-download:focus-visible {
+
+  outline: 3px solid var(--accent);
+
+  outline-offset: 4px;
+
+}
+
+
+/* Presenter */
+
+.thanks-presenter {
+
+  margin-top: 46px;
+
+  text-align: center;
+
+}
+
+.thanks-presenter-line {
+
+  font-size: 22px;
+
+  color: var(--secondary-text);
+
+}
+
+.thanks-presenter-line strong {
+
+  color: var(--main-text);
+
+  font-weight: 700;
+
+}
+
+.thanks-meta {
+
+  margin-top: 8px;
+
+  font-size: 19px;
+
+  color: var(--muted-text);
+
+}
+
+
+  margin: 30px auto 0;
+
+  font-size: 22px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
+}
+
+
+/* =========================================================
    INVISIBLE CONTROLS
    ========================================================= */
 
@@ -2266,232 +2633,6 @@ body.dark .electron-dot {
   width: 100vw;
 
   height: 100vh;
-
-}
-
-
-/* =========================================================
-   HELP BUTTON
-   ========================================================= */
-
-#help-button {
-
-  position: fixed;
-
-  top: 22px;
-
-  right: 22px;
-
-  width: 34px;
-
-  height: 34px;
-
-  border: 1px solid rgba(128,128,128,0.35);
-
-  border-radius: 50%;
-
-  background: rgba(255,255,255,0.9);
-
-  color: #555;
-
-  font-size: 18px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  z-index: 5000;
-
-}
-
-
-body.dark #help-button {
-
-  background: #242424;
-
-  color: #ddd;
-
-  border-color: #444;
-
-}
-
-
-/* =========================================================
-   HELP PANEL
-   ========================================================= */
-
-#keyboard-help {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 4999;
-
-  display: none;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background: rgba(0,0,0,0.35);
-
-}
-
-
-#keyboard-help.active {
-
-  display: flex;
-
-}
-
-
-.help-box {
-
-  width: 480px;
-
-  background: #fff;
-
-  border: 1px solid #ddd;
-
-  border-radius: 8px;
-
-  box-shadow:
-    0 20px 50px rgba(0,0,0,0.25);
-
-  padding: 25px;
-
-}
-
-
-body.dark .help-box {
-
-  background: #202020;
-
-  border-color: #3a3a3a;
-
-  color: #fff;
-
-}
-
-
-.help-header {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  padding-bottom: 18px;
-
-  border-bottom: 1px solid #e5e5e5;
-
-  margin-bottom: 12px;
-
-}
-
-
-.help-header h3 {
-
-  font-size: 20px;
-
-}
-
-
-#close-help {
-
-  border: none;
-
-  background: transparent;
-
-  color: #777;
-
-  font-size: 27px;
-
-  cursor: pointer;
-
-}
-
-
-.shortcut {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  gap: 20px;
-
-  padding: 10px 0;
-
-}
-
-
-.shortcut span {
-
-  color: #555;
-
-  font-size: 15px;
-
-}
-
-
-body.dark .shortcut span {
-
-  color: #bbb;
-
-}
-
-
-.shortcut > div {
-
-  display: flex;
-
-  gap: 5px;
-
-}
-
-
-/* =========================================================
-   KEYBOARD KEYS
-   ========================================================= */
-
-kbd {
-
-  min-width: 30px;
-
-  padding: 4px 8px;
-
-  text-align: center;
-
-  border: 1px solid #cfcfcf;
-
-  border-bottom-width: 2px;
-
-  border-radius: 4px;
-
-  background: #f5f5f5;
-
-  color: #333;
-
-  font-family: inherit;
-
-  font-size: 12px;
-
-  font-weight: 600;
-
-}
-
-
-body.dark kbd {
-
-  background: #303030;
-
-  border-color: #505050;
-
-  color: #eee;
 
 }
 

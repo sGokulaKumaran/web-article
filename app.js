@@ -271,87 +271,52 @@ showSlide(0);
 
 /* =========================================================
    HELP PANEL
+   Removed: on-screen UI controls are hidden so the deck
+   behaves like native PowerPoint (keyboard / click only).
    ========================================================= */
 
-const helpButton =
-  document.getElementById("help-button");
 
-const keyboardHelp =
-  document.getElementById("keyboard-help");
+/* =========================================================
+   CLICK-TO-ADVANCE (PowerPoint behaviour)
+   Clicks anywhere on the deck move to the next slide,
+   but interactive controls keep their own click behaviour.
+   ========================================================= */
 
-const closeHelp =
-  document.getElementById("close-help");
+// const deck = document.getElementById("deck");
 
+// deck.addEventListener(
+//   "click",
+//   function (event) {
 
-function openHelp() {
+//     /* Let real controls handle their own clicks */
 
-  keyboardHelp.classList.add("active");
+//     if (
+//       event.target.closest("button") ||
+//       event.target.closest("a")
+//     ) {
 
-  keyboardHelp.setAttribute(
-    "aria-hidden",
-    "false"
-  );
+//       return;
 
-}
+//     }
 
+//     nextSlide();
 
-function closeHelpPanel() {
-
-  keyboardHelp.classList.remove("active");
-
-  keyboardHelp.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-}
+//   }
+// );
 
 
-helpButton.addEventListener(
-  "click",
-  openHelp
-);
+// /* Right click / left third goes back, like a presenter remote */
 
+// deck.addEventListener(
+//   "contextmenu",
+//   function (event) {
 
-closeHelp.addEventListener(
-  "click",
-  closeHelpPanel
-);
+//     event.preventDefault();  
 
+//     previousSlide();
 
-/* Click outside */
-
-keyboardHelp.addEventListener(
-  "click",
-  function (event) {
-
-    if (event.target === keyboardHelp) {
-
-      closeHelpPanel();
-
-    }
-
-  }
-);
-
-
-/* Escape */
-
-document.addEventListener(
-  "keydown",
-  function (event) {
-
-    if (
-      event.key === "Escape" &&
-      keyboardHelp.classList.contains("active")
-    ) {
-
-      closeHelpPanel();
-
-    }
-
-  }
-);
+//   }
+// );
 
 
 /* =========================================================
@@ -1160,6 +1125,31 @@ function toggleGate(gate, input) {
 }
 
 
+/* =========================================================
+   CURRENT FLOW CONTROL
+   Turns the dashed overlay paths on only where real
+   current would actually be flowing.
+   ========================================================= */
+
+function setFlow(id, on) {
+
+  const el = document.getElementById(id);
+
+  if (!el) return;
+
+  if (on) {
+
+    el.classList.add("flowing");
+
+  } else {
+
+    el.classList.remove("flowing");
+
+  }
+
+}
+
+
 /* Master update — drives ALL visuals */
 
 function updateGate(gate) {
@@ -1202,6 +1192,28 @@ function updateGate(gate) {
     updateBtn("or", "a", s.a);
     updateBtn("or", "b", s.b);
 
+    /* Current flow — either branch completes the circuit */
+
+    /* Current flow - each relay drives its own coil circuit,
+       and its output circuit only carries current once its
+       contact has actually closed. Either branch reaching the
+       merge point is enough to light the bulb. */
+
+    setFlow("or-flow-in-a", s.a);
+    setFlow("or-flow-coil-a", s.a);
+    setFlow("or-flow-v-a", s.a);
+    setFlow("or-flow-arm-a", s.a);
+    setFlow("or-flow-a-out", s.a);
+
+    setFlow("or-flow-in-b", s.b);
+    setFlow("or-flow-coil-b", s.b);
+    setFlow("or-flow-v-b", s.b);
+    setFlow("or-flow-arm-b", s.b);
+    setFlow("or-flow-b-out", s.b);
+
+    /* Bulb feed, then the bulb return wire to ground */
+    setFlow("or-flow-bulb", output);
+
 
   } else if (gate === "and") {
 
@@ -1235,6 +1247,29 @@ function updateGate(gate) {
     updateBtn("and", "a", s.a);
     updateBtn("and", "b", s.b);
 
+    /* Current flow — the series link and the bulb
+       only carry current when BOTH contacts close */
+
+    /* Current flow - the link between the two armature
+       outputs only carries current when BOTH contacts
+       close, so the bulb and its return wire stay dark
+       unless both switches are on. */
+
+    setFlow("and-flow-in-a", s.a);
+    setFlow("and-flow-coil-a", s.a);
+    setFlow("and-flow-v-a", s.a);
+    setFlow("and-flow-arm-a", s.a);
+
+    /* Current leaves A and runs up to contact B */
+    setFlow("and-flow-series", s.a);
+
+    setFlow("and-flow-in-b", s.b);
+    setFlow("and-flow-coil-b", s.b);
+
+    /* Contact B, armature B, bulb feed and bulb return */
+    setFlow("and-flow-b-contact", output);
+    setFlow("and-flow-bulb", output);
+
 
   } else if (gate === "not") {
 
@@ -1257,6 +1292,19 @@ function updateGate(gate) {
     }
 
     updateBtn("not", "a", s.a);
+
+    /* Current flow — the current takes whichever
+       contact the arm is actually resting on */
+
+    /* Current flow - the coil circuit is live while the
+       switch is closed; the output circuit is live only
+       while the armature rests on the supplied upper
+       contact. The two are never live at the same time. */
+
+    setFlow("not-flow-in", s.a);
+    setFlow("not-flow-coil", s.a);
+
+    setFlow("not-flow-upper", !s.a);
 
   }
 
@@ -1309,7 +1357,10 @@ function updateRelay(gate, id, on) {
   }
 
 
-  /* Arm rotation */
+  /* Arm rotation.
+     The armature is hinged on the right and its free (left)
+     end is pulled DOWN onto the fixed contact, so a negative
+     rotation closes the contact. */
 
   const arm = document.getElementById(
     prefix + "arm-" + id
@@ -1317,7 +1368,7 @@ function updateRelay(gate, id, on) {
 
   if (arm) {
     arm.style.transform =
-      on ? "rotate(22deg)" : "rotate(0deg)";
+      on ? "rotate(-22deg)" : "rotate(0deg)";
   }
 
 
@@ -1376,7 +1427,10 @@ function updateNotRelay(on) {
   );
 
 
-  /* Arm — moves from upper to lower contact */
+  /* Arm — swings down from the upper (NC) contact,
+     which carries the supply, to the lower (NO)
+     dead end. Drawn resting on the upper contact,
+     so the energised position is a negative turn. */
 
   const arm = document.getElementById(
     "not-arm"
@@ -1384,9 +1438,7 @@ function updateNotRelay(on) {
 
   if (on) {
 
-    /* Rotate so arm moves from upper (130) to lower (210) contact */
-
-    arm.style.transform = "rotate(37deg)";
+    arm.style.transform = "rotate(-44deg)";
 
   } else {
 
