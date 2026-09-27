@@ -914,7 +914,7 @@ body {
 
   width: 180px;
 
-  height: 100px;
+  height: 86px;
 
   display: flex;
 
@@ -961,7 +961,7 @@ body {
 
 .morse-example {
 
-  margin-top: 38px;
+  margin-top: 30px;
 
   padding: 25px;
 
@@ -1047,20 +1047,128 @@ body {
 }
 
 
-.morse-idea {
-
-  margin-top: 35px;
-
-  max-width: 700px;
-
-  font-size: 21px;
-
-  line-height: 1.5;
-
-  color: var(--secondary-text);
-
+/* "HELLO" worked right through the tree */
+
+.hello-example {
+
+  margin-top: 30px;
+
+  padding: 22px 25px;
+
+  width: 640px;
+
+  border-left: 4px solid var(--accent);
+
+  background: var(--soft-background);
+
+}
+
+.hello-row {
+
+  display: flex;
+
+  gap: 12px;
+
+}
+
+.hello-letter {
+
+  width: 108px;
+
+  padding: 9px 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  background: var(--slide-background);
+
+  border: 1px solid var(--border);
+
+}
+
+.hl-char {
+
+  font-size: 25px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+}
+
+.hl-code {
+
+  margin-top: 5px;
+
+  font-family: Georgia, serif;
+
+  font-size: 25px;
+
+  line-height: 1.1;
+
+  color: var(--accent);
+
+}
+
+.hello-full {
+
+  display: flex;
+
+  align-items: baseline;
+
+  justify-content: center;
+
+  gap: 14px;
+
+  margin-top: 16px;
+
+}
+
+.hello-word {
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+}
+
+.hello-equals {
+
+  color: var(--muted-text);
+
+}
+
+.hello-seq {
+
+  font-family: Georgia, serif;
+
+  font-size: 28px;
+
+  letter-spacing: 0.06em;
+
+  color: var(--accent);
+
+}
+
+
+.morse-idea {
+
+  margin-top: 26px;
+
+  max-width: 700px;
+
+  font-size: 21px;
+
+  line-height: 1.5;
+
+  color: var(--secondary-text);
+
 }
-
 
 .morse-idea strong {
 
