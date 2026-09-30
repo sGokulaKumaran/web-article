@@ -26,6 +26,20 @@
 
     <div id="deck">
 
+      <!-- Two wrappers around the fixed-size stage.
+
+           #deck      = the box the browser actually lays out.
+                        Its size is the *fitted* size, so the
+                        presentation can scroll correctly.
+           #deck-fit  = scaled down to fit the screen.
+           #deck-stage= the real 1920 x 1080 (or mobile) stage
+                        holding every slide, scaled by the
+                        word-size setting. -->
+
+      <div id="deck-fit">
+
+        <div id="deck-stage">
+
 
       <!-- =================================================
            SLIDE 1 — TITLE
@@ -3417,7 +3431,11 @@
            ================================================= -->
 
 
-    </div>
+        </div><!-- /#deck-stage -->
+
+      </div><!-- /#deck-fit -->
+
+    </div><!-- /#deck -->
 
   </main>
 
@@ -3439,6 +3457,121 @@
     aria-label="Next slide"
   ></button>
 
+
+
+  <!-- =====================================================
+       ACCESSIBILITY TOOLBAR
+       A single small button that opens the display
+       settings: theme, page size and word size, plus
+       fullscreen, black screen and the shortcut list.
+       ===================================================== -->
+
+  <button
+    id="a11y-button"
+    class="a11y-button"
+    type="button"
+    aria-label="Display and accessibility settings"
+    aria-expanded="false"
+    aria-controls="a11y-panel"
+    title="Display settings"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="4.6" r="2.1" />
+      <path d="M4.4 8.4c2.4-.9 4.9-1.3 7.6-1.3s5.2.4 7.6 1.3" />
+      <path d="M12 7.1v12.9" />
+      <path d="M12 12.4 8.2 20" />
+      <path d="M12 12.4 15.8 20" />
+    </svg>
+  </button>
+
+
+  <div id="a11y-panel" class="a11y-panel" role="dialog"
+       aria-label="Display and accessibility settings" hidden>
+
+    <div class="a11y-panel-head">
+      <h2 class="a11y-panel-title">Display</h2>
+      <button id="a11y-close" class="a11y-close" type="button"
+              aria-label="Close settings">&times;</button>
+    </div>
+
+
+    <section class="a11y-group">
+      <h3 class="a11y-label" id="a11y-theme-label">Theme</h3>
+      <div class="a11y-segments" role="group" aria-labelledby="a11y-theme-label">
+        <button type="button" class="a11y-seg" data-theme="light">Light</button>
+        <button type="button" class="a11y-seg" data-theme="dark">Dark</button>
+        <button type="button" class="a11y-seg" data-theme="system">Auto</button>
+      </div>
+    </section>
+
+
+    <section class="a11y-group">
+      <h3 class="a11y-label" id="a11y-page-label">Page size</h3>
+      <div class="a11y-segments" role="group" aria-labelledby="a11y-page-label">
+        <button type="button" class="a11y-seg" data-page="auto">Auto</button>
+        <button type="button" class="a11y-seg" data-page="16:9">16:9</button>
+        <button type="button" class="a11y-seg" data-page="16:10">16:10</button>
+        <button type="button" class="a11y-seg" data-page="4:3">4:3</button>
+      </div>
+    </section>
+
+
+    <section class="a11y-group">
+      <h3 class="a11y-label" id="a11y-word-label">Word size</h3>
+      <div class="a11y-word-row" role="group" aria-labelledby="a11y-word-label">
+        <button type="button" class="a11y-step" id="a11y-word-down"
+                aria-label="Decrease word size">A&minus;</button>
+        <output class="a11y-word-value" id="a11y-word-value" aria-live="polite">100%</output>
+        <button type="button" class="a11y-step" id="a11y-word-up"
+                aria-label="Increase word size">A+</button>
+      </div>
+    </section>
+
+
+    <section class="a11y-group">
+      <h3 class="a11y-label">Actions</h3>
+      <div class="a11y-actions">
+        <button type="button" class="a11y-action" id="a11y-fullscreen">Fullscreen</button>
+        <button type="button" class="a11y-action" id="a11y-black">Black screen</button>
+      </div>
+    </section>
+
+
+    <section class="a11y-group a11y-group-keys">
+      <h3 class="a11y-label">Keyboard shortcuts</h3>
+      <ul class="a11y-keys">
+        <li><span>Next / previous slide</span><span><kbd>&rarr;</kbd> <kbd>&larr;</kbd> <kbd>Space</kbd></span></li>
+        <li><span>First / last slide</span><span><kbd>Home</kbd> <kbd>End</kbd></span></li>
+        <li><span>Change theme</span><span><kbd>t</kbd></span></li>
+        <li><span>Page size</span><span><kbd>p</kbd></span></li>
+        <li><span>Word size</span><span><kbd>+</kbd> <kbd>&minus;</kbd> <kbd>0</kbd></span></li>
+        <li><span>Fullscreen</span><span><kbd>f</kbd></span></li>
+        <li><span>Black screen</span><span><kbd>b</kbd></span></li>
+        <li><span>Settings panel</span><span><kbd>s</kbd> <kbd>Esc</kbd></span></li>
+      </ul>
+      <p class="a11y-note">On a phone: swipe left or right, or tap the sides.</p>
+    </section>
+
+  </div>
+
+
+  <!-- Slide pager, mainly for phones where the tap zones
+       are less discoverable than real buttons. -->
+  <nav class="pager" aria-label="Slide navigation">
+    <button type="button" class="pager-btn" id="pager-prev"
+            aria-label="Previous slide">&#8249;</button>
+    <span class="pager-count" id="pager-count">1 / 1</span>
+    <button type="button" class="pager-btn" id="pager-next"
+            aria-label="Next slide">&#8250;</button>
+  </nav>
+
+
+  <div class="progress" aria-hidden="true">
+    <div class="progress-bar" id="progress-bar"></div>
+  </div>
+
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 
   <!-- =====================================================

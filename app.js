@@ -10,19 +10,125 @@ let currentSlide = 0;
 
 
 /* =========================================================
-   FIT DECK TO THE SCREEN
-   The deck is a fixed 1920 x 1080 stage. Without scaling,
-   any window shorter than 1080 px cuts off the bottom of
-   every slide. Scaling the whole stage keeps all content
-   visible on any screen, exactly like PowerPoint.
+   DISPLAY SETTINGS
+   Theme, page size and word size are all user preferences,
+   so they are saved in localStorage and restored on the
+   next visit. localStorage can throw (private mode, blocked
+   cookies), hence the small wrapper around it.
    ========================================================= */
 
-const DECK_WIDTH = 1920;
+const STORAGE_KEY = "code-ppt-display";
 
-const DECK_HEIGHT = 1080;
+/* A page size is really an aspect ratio. "auto" follows the
+   shape of the screen, which is what a phone wants. */
 
-const deckElement =
-  document.getElementById("deck");
+const PAGE_SIZES = {
+
+  "auto": null,
+
+  "16:9": 16 / 9,
+
+  "16:10": 16 / 10,
+
+  "4:3": 4 / 3
+
+};
+
+
+/* Word size steps. 1 is the size the slides were designed
+   at; the others are a real zoom, so everything grows
+   together and nothing is ever cut off. */
+
+const WORD_STEPS = [
+
+  0.8, 0.9, 1, 1.15, 1.3, 1.5, 1.75
+
+];
+
+
+const DEFAULT_SETTINGS = {
+
+  theme: "dark",
+
+  pageSize: "auto",
+
+  wordStep: 2
+
+};
+
+
+function readSettings() {
+
+  const settings = Object.assign({}, DEFAULT_SETTINGS);
+
+  try {
+
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+    if (saved && typeof saved === "object") {
+
+      if (["light", "dark", "system"].includes(saved.theme)) {
+        settings.theme = saved.theme;
+      }
+
+      if (Object.prototype.hasOwnProperty.call(PAGE_SIZES, saved.pageSize)) {
+        settings.pageSize = saved.pageSize;
+      }
+
+      if (
+        Number.isInteger(saved.wordStep) &&
+        saved.wordStep >= 0 &&
+        saved.wordStep < WORD_STEPS.length
+      ) {
+        settings.wordStep = saved.wordStep;
+      }
+
+    }
+
+  } catch (error) {
+
+    /* No storage available: the defaults are fine. */
+
+  }
+
+  return settings;
+
+}
+
+
+function saveSettings() {
+
+  try {
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+  } catch (error) {
+
+    /* Ignore: the settings still apply for this session. */
+
+  }
+
+}
+
+
+const settings = readSettings();
+
+
+/* =========================================================
+   STAGE SIZE
+   The desktop stage is a fixed 1920 x 1080. A phone cannot
+   use it: shrunk to a 390px screen, 22px body text would
+   render at about 4px. So on a touch device the stage is
+   swapped for a narrow, portrait shaped one and the mobile
+   CSS in style.css reflows every slide into a single column
+   with much larger type.
+   ========================================================= */
+
+const deckElement = document.getElementById("deck");
+
+const deckFitElement = document.getElementById("deck-fit");
+
+const stageElement = document.getElementById("deck-stage");
 
 
 /* Reads the real visible area, so fullscreen and
@@ -47,9 +153,120 @@ function getViewportSize() {
 }
 
 
+function isTouchDevice() {
+
+  return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+
+}
+
+
+function clamp(value, min, max) {
+
+  return Math.min(Math.max(value, min), max);
+
+}
+
+
+/* The stage shape is remembered rather than re-read on every
+   resize. A phone browser hides and shows its address bar as
+   the page scrolls, which changes the viewport height by a
+   noticeable amount; re-deriving the stage from that would
+   reflow the whole slide and make it jump while reading.
+   Only a real change of shape (turning the device, or a
+   window being dragged much wider or narrower) updates it. */
+
+let stageAspect = 0;
+
+const ASPECT_CHANGE_LIMIT = 0.12;
+
+
+function updateStageAspect(force) {
+
+  const viewport = getViewportSize();
+
+  const aspect = viewport.width / viewport.height;
+
+  const changed =
+    stageAspect === 0 ||
+    Math.abs(aspect - stageAspect) > ASPECT_CHANGE_LIMIT;
+
+  if (force || changed) {
+
+    stageAspect = aspect;
+
+  }
+
+}
+
+
+function getStageRatio() {
+
+  const chosenRatio = PAGE_SIZES[settings.pageSize];
+
+  if (chosenRatio !== null) {
+
+    return chosenRatio;
+
+  }
+
+  /* Following the screen. A landscape phone, though, is a thin
+     strip that is far wider than it is tall, which would give a
+     stage too short for any slide to sit in. A slide shape is
+     capped at 16:9 there, so the content keeps a sensible
+     height and only a little scrolling is ever needed. */
+
+  if (isTouchDevice() && stageAspect >= 1) {
+
+    return Math.min(stageAspect, 16 / 9);
+
+  }
+
+  return stageAspect;
+
+}
+
+
+function getStageSize() {
+
+  const ratio = getStageRatio();
+
+  if (isTouchDevice()) {
+
+    /* Landscape has room for two columns, so the stage is
+       wider there; portrait gets a narrow single column.
+       The height follows the stage ratio, clamped so an
+       extreme screen shape cannot produce a silly stage. */
+
+    const width = stageAspect >= 1 ? 1280 : 720;
+
+    return {
+
+      width: width,
+
+      height: Math.round(
+        clamp(width / ratio, width * 0.45, width * 2.4)
+      )
+
+    };
+
+  }
+
+  return {
+
+    width: 1920,
+
+    height: Math.round(
+      clamp(1920 / ratio, 900, 1920)
+    )
+
+  };
+
+}
+
+
 function fitDeckToScreen() {
 
-  if (!deckElement) {
+  if (!deckElement || !stageElement || !deckFitElement) {
 
     return;
 
@@ -57,19 +274,40 @@ function fitDeckToScreen() {
 
   const viewport = getViewportSize();
 
-  /* The stage always scales to fill the screen, growing
-     as well as shrinking, so it covers the whole display
-     in fullscreen on any monitor. The 16:9 ratio is kept
-     and any leftover space is letterboxed by the black
-     background. */
+  const stage = getStageSize();
 
-  const scale = Math.min(
-    viewport.width / DECK_WIDTH,
-    viewport.height / DECK_HEIGHT
+  const wordScale = WORD_STEPS[settings.wordStep];
+
+  /* The stage fills the screen, so the slide is as large as
+     it can be without being cut off. A chosen page size that
+     does not match the screen leaves letterbox bars, which is
+     exactly what a real page size does. */
+
+  const fit = Math.min(
+
+    viewport.width / stage.width,
+    viewport.height / stage.height
+
   );
 
-  deckElement.style.transform =
-    `scale(${scale})`;
+  stageElement.style.width = stage.width + "px";
+
+  stageElement.style.height = stage.height + "px";
+
+  stageElement.style.transform = `scale(${wordScale})`;
+
+  deckFitElement.style.width = stage.width * wordScale + "px";
+
+  deckFitElement.style.height = stage.height * wordScale + "px";
+
+  deckFitElement.style.transform = `scale(${fit})`;
+
+  /* #deck is given the size the slide finally appears at, so
+     the browser scrolls exactly the right amount. */
+
+  deckElement.style.width = stage.width * wordScale * fit + "px";
+
+  deckElement.style.height = stage.height * wordScale * fit + "px";
 
 }
 
@@ -82,6 +320,8 @@ function fitDeckToScreen() {
 let fitFrameCount = 0;
 
 function scheduleFit() {
+
+  updateStageAspect();
 
   fitFrameCount = 2;
 
@@ -106,6 +346,19 @@ function scheduleFit() {
 }
 
 
+/* Turning the device is a real change of shape, so the stage
+   is rebuilt for the new orientation even if the viewport
+   measurements arrive late. */
+
+function handleOrientationChange() {
+
+  updateStageAspect(true);
+
+  scheduleFit();
+
+}
+
+
 window.addEventListener(
   "resize",
   scheduleFit
@@ -113,7 +366,7 @@ window.addEventListener(
 
 window.addEventListener(
   "orientationchange",
-  scheduleFit
+  handleOrientationChange
 );
 
 window.visualViewport?.addEventListener(
@@ -142,6 +395,11 @@ if (window.ResizeObserver) {
 
 }
 
+/* The shape of the stage is read once up front, so the very
+   first render is already correct. */
+
+updateStageAspect(true);
+
 fitDeckToScreen();
 
 
@@ -167,10 +425,19 @@ function showSlide(index) {
       i === index
     );
 
+    /* A slide that scrolls (a long one on a phone) has to
+       start at the top again, or the next slide would open
+       halfway down. */
+    if (i === index && slide.scrollTop) {
+      slide.scrollTop = 0;
+    }
+
   });
 
 
   currentSlide = index;
+
+  updateSlideIndicator();
 
 }
 
@@ -212,6 +479,24 @@ function previousSlide() {
 document.addEventListener(
   "keydown",
   function (event) {
+
+    /* Let the browser keep its own shortcuts
+       (Ctrl+P, Cmd+S, Alt+Left and so on) and anything
+       typed into a control. */
+    if (
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    if (
+      event.target instanceof HTMLElement &&
+      event.target.closest("input, textarea, select, [contenteditable]")
+    ) {
+      return;
+    }
 
 
     /* NEXT */
@@ -292,16 +577,98 @@ document.addEventListener(
     }
 
 
-    /* THEME */
+    /* THEME
+       t cycles light -> dark -> follow the system. */
+
+    if (event.key === "t" || event.key === "T") {
+
+      event.preventDefault();
+
+      cycleTheme();
+
+      return;
+
+    }
+
+
+    /* PAGE SIZE
+       p cycles auto -> 16:9 -> 16:10 -> 4:3. */
+
+    if (event.key === "p" || event.key === "P") {
+
+      event.preventDefault();
+
+      cyclePageSize();
+
+      return;
+
+    }
+
+
+    /* WORD SIZE */
 
     if (
-      event.key === "t" ||
-      event.key === "T"
+      event.key === "+" ||
+      event.key === "="
     ) {
 
       event.preventDefault();
 
-      toggleTheme();
+      changeWordSize(1);
+
+      return;
+
+    }
+
+
+    if (
+      event.key === "-" ||
+      event.key === "_"
+    ) {
+
+      event.preventDefault();
+
+      changeWordSize(-1);
+
+      return;
+
+    }
+
+
+    /* 0 resets the word size back to 100%. */
+
+    if (event.key === "0") {
+
+      event.preventDefault();
+
+      setWordSize(2, true);
+
+      return;
+
+    }
+
+
+    /* SETTINGS PANEL
+       s or ? opens it, Escape closes it. */
+
+    if (
+      event.key === "s" ||
+      event.key === "S" ||
+      event.key === "?"
+    ) {
+
+      event.preventDefault();
+
+      toggleSettingsPanel();
+
+      return;
+
+    }
+
+
+    if (event.key === "Escape") {
+
+      closeSettingsPanel();
 
       return;
 
@@ -359,11 +726,425 @@ async function toggleFullscreen() {
 
 /* =========================================================
    THEME
+   "system" follows the operating system, and keeps following
+   it if the user changes it while the page is open.
    ========================================================= */
 
-function toggleTheme() {
+const systemThemeQuery =
+  window.matchMedia("(prefers-color-scheme: dark)");
 
-  document.body.classList.toggle("dark");
+
+function applyTheme() {
+
+  const dark =
+    settings.theme === "system"
+      ? systemThemeQuery.matches
+      : settings.theme === "dark";
+
+  document.body.classList.toggle("dark", dark);
+
+}
+
+
+function getThemeLabel() {
+
+  if (settings.theme === "system") {
+    return "follow system";
+  }
+
+  return settings.theme;
+
+}
+
+
+function setTheme(theme) {
+
+  settings.theme = theme;
+
+  applyTheme();
+
+  saveSettings();
+
+  syncSettingsUI();
+
+  showToast("Theme: " + getThemeLabel());
+
+}
+
+
+function cycleTheme() {
+
+  const order = ["light", "dark", "system"];
+
+  setTheme(
+    order[(order.indexOf(settings.theme) + 1) % order.length]
+  );
+
+}
+
+
+systemThemeQuery.addEventListener("change", function () {
+
+  if (settings.theme === "system") {
+
+    applyTheme();
+
+  }
+
+});
+
+
+/* =========================================================
+   PAGE SIZE
+   ========================================================= */
+
+function setPageSize(pageSize) {
+
+  settings.pageSize = pageSize;
+
+  saveSettings();
+
+  scheduleFit();
+
+  syncSettingsUI();
+
+  showToast("Page size: " + pageSize);
+
+}
+
+
+function cyclePageSize() {
+
+  const order = Object.keys(PAGE_SIZES);
+
+  setPageSize(
+    order[(order.indexOf(settings.pageSize) + 1) % order.length]
+  );
+
+}
+
+
+/* =========================================================
+   WORD SIZE
+   The whole stage is scaled, so the text, the diagrams and
+   the spacing all grow together and nothing is ever
+   clipped. A slide bigger than the screen is scrolled.
+   ========================================================= */
+
+function getWordSizeLabel() {
+
+  return Math.round(WORD_STEPS[settings.wordStep] * 100) + "%";
+
+}
+
+
+function setWordSize(step, announce) {
+
+  const next = clamp(step, 0, WORD_STEPS.length - 1);
+
+  if (next === settings.wordStep) {
+
+    return;
+
+  }
+
+  settings.wordStep = next;
+
+  saveSettings();
+
+  scheduleFit();
+
+  syncSettingsUI();
+
+  if (announce) {
+
+    showToast("Word size: " + getWordSizeLabel());
+
+  }
+
+}
+
+
+function changeWordSize(direction) {
+
+  setWordSize(settings.wordStep + direction, true);
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY TOOLBAR
+   The settings button, the panel, the pager and the toast
+   all live outside the deck, so they keep a usable size on
+   a phone and never interfere with the click-to-advance
+   behaviour of the slides themselves.
+   ========================================================= */
+
+const a11yButton =
+  document.getElementById("a11y-button");
+
+const a11yPanel =
+  document.getElementById("a11y-panel");
+
+const a11yClose =
+  document.getElementById("a11y-close");
+
+const a11yWordValue =
+  document.getElementById("a11y-word-value");
+
+const pagerCount =
+  document.getElementById("pager-count");
+
+const pagerPrev =
+  document.getElementById("pager-prev");
+
+const pagerNext =
+  document.getElementById("pager-next");
+
+const progressBar =
+  document.getElementById("progress-bar");
+
+const toastElement =
+  document.getElementById("toast");
+
+
+/* ---------- Settings panel ---------- */
+
+function isSettingsPanelOpen() {
+
+  return !a11yPanel.hidden;
+
+}
+
+
+function openSettingsPanel() {
+
+  a11yPanel.hidden = false;
+
+  a11yButton.setAttribute("aria-expanded", "true");
+
+  syncSettingsUI();
+
+}
+
+
+function closeSettingsPanel() {
+
+  a11yPanel.hidden = true;
+
+  a11yButton.setAttribute("aria-expanded", "false");
+
+}
+
+
+function toggleSettingsPanel() {
+
+  if (isSettingsPanelOpen()) {
+    closeSettingsPanel();
+  } else {
+    openSettingsPanel();
+  }
+
+}
+
+
+function syncSettingsUI() {
+
+  /* Highlight the current choice in every group. */
+  a11yPanel
+    .querySelectorAll("[data-theme]")
+    .forEach(function (button) {
+
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.theme === settings.theme)
+      );
+
+    });
+
+  a11yPanel
+    .querySelectorAll("[data-page]")
+    .forEach(function (button) {
+
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.page === settings.pageSize)
+      );
+
+    });
+
+  a11yWordValue.textContent = getWordSizeLabel();
+
+}
+
+
+a11yButton.addEventListener(
+  "click",
+  function (event) {
+
+    event.stopPropagation();
+
+    toggleSettingsPanel();
+
+  }
+);
+
+
+a11yClose.addEventListener(
+  "click",
+  function (event) {
+
+    event.stopPropagation();
+
+    closeSettingsPanel();
+
+  }
+);
+
+
+/* Tapping a choice inside the panel must not fall through to
+   the deck behind it, which would change the slide. */
+a11yPanel.addEventListener(
+  "click",
+  function (event) {
+
+    event.stopPropagation();
+
+  }
+);
+
+
+document.addEventListener(
+  "click",
+  function (event) {
+
+    if (!isSettingsPanelOpen()) {
+      return;
+    }
+
+    if (a11yPanel.contains(event.target)) {
+      return;
+    }
+
+    if (a11yButton.contains(event.target)) {
+      return;
+    }
+
+    closeSettingsPanel();
+
+  }
+);
+
+
+a11yPanel
+  .querySelectorAll("[data-theme]")
+  .forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+      setTheme(button.dataset.theme);
+
+    });
+
+  });
+
+
+a11yPanel
+  .querySelectorAll("[data-page]")
+  .forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+      setPageSize(button.dataset.page);
+
+    });
+
+  });
+
+
+document
+  .getElementById("a11y-word-down")
+  .addEventListener("click", function () {
+
+    changeWordSize(-1);
+
+  });
+
+
+document
+  .getElementById("a11y-word-up")
+  .addEventListener("click", function () {
+
+    changeWordSize(1);
+
+  });
+
+
+document
+  .getElementById("a11y-fullscreen")
+  .addEventListener("click", toggleFullscreen);
+
+
+document
+  .getElementById("a11y-black")
+  .addEventListener("click", toggleBlackScreen);
+
+
+pagerPrev.addEventListener("click", function (event) {
+
+  event.stopPropagation();
+
+  previousSlide();
+
+});
+
+
+pagerNext.addEventListener("click", function (event) {
+
+  event.stopPropagation();
+
+  nextSlide();
+
+});
+
+
+/* ---------- Slide counter and progress ---------- */
+
+function updateSlideIndicator() {
+
+  const number = currentSlide + 1;
+
+  const total = slides.length;
+
+  pagerCount.textContent = number + " / " + total;
+
+  progressBar.style.width =
+    (number / total) * 100 + "%";
+
+  pagerPrev.disabled = currentSlide === 0;
+
+  pagerNext.disabled = currentSlide === total - 1;
+
+}
+
+
+/* ---------- Toast, confirms a keyboard change ---------- */
+
+let toastTimer = null;
+
+function showToast(message) {
+
+  toastElement.textContent = message;
+
+  toastElement.classList.add("visible");
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(function () {
+
+    toastElement.classList.remove("visible");
+
+  }, 1400);
 
 }
 
@@ -402,14 +1183,11 @@ document
    START PRESENTATION
    ========================================================= */
 
+applyTheme();
+
+syncSettingsUI();
+
 showSlide(0);
-
-
-/* =========================================================
-   HELP PANEL
-   Removed: on-screen UI controls are hidden so the deck
-   behaves like native PowerPoint (keyboard / click only).
-   ========================================================= */
 
 
 /* =========================================================
